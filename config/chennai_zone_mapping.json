@@ -1,0 +1,28 @@
+{
+  "North Chennai": [
+    "Perambur",
+    "Ambattur",
+    "Mogappair",
+    "Anna Nagar",
+    "Porur"
+  ],
+  "Central Chennai": [
+    "T Nagar",
+    "Mylapore",
+    "Nungambakkam",
+    "Egmore",
+    "Royapettah",
+    "Kodambakkam",
+    "Guindy"
+  ],
+  "South Chennai": [
+    "Adyar",
+    "Velachery",
+    "Sholinganallur",
+    "Thiruvanmiyur",
+    "Tambaram",
+    "Chromepet",
+    "Pallavaram",
+    "Alandur"
+  ]
+}

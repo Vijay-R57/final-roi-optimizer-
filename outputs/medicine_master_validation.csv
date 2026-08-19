@@ -1,0 +1,2 @@
+total_medicines,therapeutic_classes,duplicate_ids,duplicate_combos,missing_tc,missing_form,missing_str,missing_price,invalid_price,status
+120,12,0,0,0,0,0,0,0,PASS

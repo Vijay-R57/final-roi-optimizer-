@@ -1,0 +1,121 @@
+Medicine_ID,Generic_Name,Brand_Name,Therapeutic_Class,Dosage_Form,Strength,Unit_Price_INR,Sample_Eligible
+MED001,Atorvastatin,Newstat,Lipid Lowering,Tablet,10 mg,120,True
+MED002,Atorvastatin,Newstat,Lipid Lowering,Tablet,20 mg,160,True
+MED003,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,5 mg,110,True
+MED004,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,10 mg,145,True
+MED005,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,20 mg,190,True
+MED006,Simvastatin,Simva,Lipid Lowering,Tablet,10 mg,95,True
+MED007,Simvastatin,Simva,Lipid Lowering,Tablet,20 mg,125,True
+MED008,Pravastatin,Prava,Lipid Lowering,Tablet,10 mg,100,True
+MED009,Pravastatin,Prava,Lipid Lowering,Tablet,20 mg,135,True
+MED010,Ezetimibe,Ezetra,Lipid Lowering,Tablet,10 mg,175,True
+MED011,Metformin,Metfor,Antidiabetic,Tablet,500 mg,60,True
+MED012,Metformin,Metfor,Antidiabetic,Tablet,1000 mg,90,True
+MED013,Glimepiride,Glimep,Antidiabetic,Tablet,1 mg,55,True
+MED014,Glimepiride,Glimep,Antidiabetic,Tablet,2 mg,75,True
+MED015,Gliclazide,Glicla,Antidiabetic,Tablet,80 mg,85,True
+MED016,Sitagliptin,Sitaglo,Antidiabetic,Tablet,100 mg,210,True
+MED017,Vildagliptin,Vilda,Antidiabetic,Tablet,50 mg,180,True
+MED018,Linagliptin,Lina,Antidiabetic,Tablet,5 mg,195,True
+MED019,Empagliflozin,Empa,Antidiabetic,Tablet,10 mg,230,True
+MED020,Dapagliflozin,Dapa,Antidiabetic,Tablet,10 mg,220,True
+MED021,Amlodipine,Amlo,Antihypertensive,Tablet,5 mg,45,True
+MED022,Amlodipine,Amlo,Antihypertensive,Tablet,10 mg,70,True
+MED023,Losartan,Losar,Antihypertensive,Tablet,50 mg,80,True
+MED024,Losartan,Losar,Antihypertensive,Tablet,100 mg,120,True
+MED025,Telmisartan,Telma,Antihypertensive,Tablet,40 mg,110,True
+MED026,Telmisartan,Telma,Antihypertensive,Tablet,80 mg,160,True
+MED027,Olmesartan,Olme,Antihypertensive,Tablet,20 mg,125,True
+MED028,Ramipril,Ramip,Antihypertensive,Tablet,5 mg,70,True
+MED029,Enalapril,Enal,Antihypertensive,Tablet,5 mg,55,True
+MED030,Bisoprolol,Biso,Antihypertensive,Tablet,5 mg,85,True
+MED031,Clopidogrel,Clopi,Antiplatelet,Tablet,75 mg,90,True
+MED032,Clopidogrel,Clopi,Antiplatelet,Tablet,150 mg,145,True
+MED033,Aspirin,Aspira,Antiplatelet,Tablet,75 mg,35,True
+MED034,Aspirin,Aspira,Antiplatelet,Tablet,150 mg,55,True
+MED035,Ticagrelor,Tica,Antiplatelet,Tablet,90 mg,260,True
+MED036,Prasugrel,Prasu,Antiplatelet,Tablet,10 mg,230,True
+MED037,Cilostazol,Cilo,Antiplatelet,Tablet,100 mg,140,True
+MED038,Dipyridamole,Dipy,Antiplatelet,Tablet,75 mg,120,True
+MED039,Dipyridamole,Dipy,Antiplatelet,Capsule,200 mg,180,True
+MED040,Vorapaxar,Vora,Antiplatelet,Tablet,2.08 mg,300,True
+MED041,Omeprazole,Ome,Gastrointestinal,Capsule,20 mg,70,True
+MED042,Omeprazole,Ome,Gastrointestinal,Capsule,40 mg,105,True
+MED043,Pantoprazole,Panto,Gastrointestinal,Tablet,40 mg,90,True
+MED044,Esomeprazole,Eso,Gastrointestinal,Tablet,40 mg,115,True
+MED045,Rabeprazole,Rabe,Gastrointestinal,Tablet,20 mg,95,True
+MED046,Lansoprazole,Lanso,Gastrointestinal,Capsule,30 mg,100,True
+MED047,Famotidine,Famo,Gastrointestinal,Tablet,20 mg,55,True
+MED048,Sucralfate,Sucral,Gastrointestinal,Tablet,1 g,80,True
+MED049,Ondansetron,Ondra,Gastrointestinal,Tablet,4 mg,65,True
+MED050,Domperidone,Dompi,Gastrointestinal,Tablet,10 mg,50,True
+MED051,Salbutamol,Salbu,Respiratory,Tablet,4 mg,45,True
+MED052,Montelukast,Monte,Respiratory,Tablet,10 mg,90,True
+MED053,Montelukast,Monte,Respiratory,Tablet,5 mg,70,True
+MED054,Levocetirizine,Levo,Respiratory,Tablet,5 mg,60,True
+MED055,Cetirizine,Ceti,Respiratory,Tablet,10 mg,45,True
+MED056,Budesonide,Bude,Respiratory,Inhaler,200 mcg,220,True
+MED057,Formoterol,Formo,Respiratory,Inhaler,6 mcg,240,True
+MED058,Budesonide,Bude,Respiratory,Inhaler,400 mcg,290,True
+MED059,Tiotropium,Tio,Respiratory,Capsule,18 mcg,260,True
+MED060,Theophylline,Theo,Respiratory,Tablet,200 mg,75,True
+MED061,Amoxicillin,Amoxi,Antibiotic,Capsule,500 mg,90,True
+MED062,Amoxicillin,Amoxi,Antibiotic,Tablet,500 mg,95,True
+MED063,Azithromycin,Azithro,Antibiotic,Tablet,500 mg,110,True
+MED064,Cefixime,Cefix,Antibiotic,Tablet,200 mg,125,True
+MED065,Cefuroxime,Cefuro,Antibiotic,Tablet,500 mg,145,True
+MED066,Doxycycline,Doxy,Antibiotic,Capsule,100 mg,85,True
+MED067,Clarithromycin,Clari,Antibiotic,Tablet,500 mg,160,True
+MED068,Levofloxacin,Levof,Antibiotic,Tablet,500 mg,120,True
+MED069,Ciprofloxacin,Cipro,Antibiotic,Tablet,500 mg,80,True
+MED070,Metronidazole,Metro,Antibiotic,Tablet,400 mg,55,True
+MED071,Paracetamol,Parac,Analgesic,Tablet,500 mg,30,True
+MED072,Paracetamol,Parac,Analgesic,Tablet,650 mg,40,True
+MED073,Ibuprofen,Ibu,Analgesic,Tablet,200 mg,35,True
+MED074,Ibuprofen,Ibu,Analgesic,Tablet,400 mg,55,True
+MED075,Naproxen,Napro,Analgesic,Tablet,250 mg,60,True
+MED076,Naproxen,Napro,Analgesic,Tablet,500 mg,90,True
+MED077,Diclofenac,Diclac,Analgesic,Tablet,50 mg,55,True
+MED078,Aceclofenac,Aceclo,Analgesic,Tablet,100 mg,65,True
+MED079,Tramadol,Trama,Analgesic,Capsule,50 mg,75,True
+MED080,Etoricoxib,Etor,Analgesic,Tablet,90 mg,110,True
+MED081,Levothyroxine,Thyro,Thyroid,Tablet,25 mcg,45,True
+MED082,Levothyroxine,Thyro,Thyroid,Tablet,50 mcg,55,True
+MED083,Levothyroxine,Thyro,Thyroid,Tablet,75 mcg,65,True
+MED084,Levothyroxine,Thyro,Thyroid,Tablet,100 mcg,75,True
+MED085,Methimazole,Methi,Thyroid,Tablet,5 mg,70,True
+MED086,Carbimazole,Carbi,Thyroid,Tablet,5 mg,60,True
+MED087,Carbimazole,Carbi,Thyroid,Tablet,10 mg,85,True
+MED088,Propylthiouracil,PTU,Thyroid,Tablet,50 mg,100,True
+MED089,Liothyronine,Lio,Thyroid,Tablet,25 mcg,120,True
+MED090,Liothyronine,Lio,Thyroid,Tablet,50 mcg,170,True
+MED091,Gabapentin,Gaba,CNS / Neurology,Capsule,300 mg,100,True
+MED092,Pregabalin,Prega,CNS / Neurology,Capsule,75 mg,120,True
+MED093,Pregabalin,Prega,CNS / Neurology,Capsule,150 mg,190,True
+MED094,Carbamazepine,Carba,CNS / Neurology,Tablet,200 mg,85,True
+MED095,Sodium Valproate,Valpa,CNS / Neurology,Tablet,200 mg,90,True
+MED096,Levetiracetam,Leve,CNS / Neurology,Tablet,500 mg,160,True
+MED097,Levetiracetam,Leve,CNS / Neurology,Tablet,1000 mg,260,True
+MED098,Topiramate,Topi,CNS / Neurology,Tablet,50 mg,130,True
+MED099,Lamotrigine,Lamo,CNS / Neurology,Tablet,50 mg,145,True
+MED100,Amitriptyline,Amit,CNS / Neurology,Tablet,10 mg,55,True
+MED101,Loratadine,Lora,Dermatology / Allergy,Tablet,10 mg,60,True
+MED102,Fexofenadine,Fexo,Dermatology / Allergy,Tablet,120 mg,85,True
+MED103,Fexofenadine,Fexo,Dermatology / Allergy,Tablet,180 mg,105,True
+MED104,Desloratadine,Deslo,Dermatology / Allergy,Tablet,5 mg,90,True
+MED105,Hydroxyzine,Hydro,Dermatology / Allergy,Tablet,25 mg,65,True
+MED106,Mometasone,Mome,Dermatology / Allergy,Cream,0.1%,95,True
+MED107,Clotrimazole,Clotri,Dermatology / Allergy,Cream,1%,55,True
+MED108,Ketoconazole,Keto,Dermatology / Allergy,Cream,2%,75,True
+MED109,Terbinafine,Terbi,Dermatology / Allergy,Cream,1%,110,True
+MED110,Tacrolimus,Tacro,Dermatology / Allergy,Ointment,0.1%,240,True
+MED111,Tamsulosin,Tamsu,Urology,Capsule,0.4 mg,110,True
+MED112,Tamsulosin,Tamsu,Urology,Capsule,0.2 mg,90,True
+MED113,Finasteride,Fina,Urology,Tablet,5 mg,95,True
+MED114,Dutasteride,Duta,Urology,Capsule,0.5 mg,130,True
+MED115,Silodosin,Silo,Urology,Capsule,8 mg,150,True
+MED116,Alfuzosin,Alfu,Urology,Tablet,10 mg,125,True
+MED117,Solifenacin,Soli,Urology,Tablet,5 mg,140,True
+MED118,Solifenacin,Soli,Urology,Tablet,10 mg,190,True
+MED119,Mirabegron,Mira,Urology,Tablet,25 mg,180,True
+MED120,Mirabegron,Mira,Urology,Tablet,50 mg,250,True

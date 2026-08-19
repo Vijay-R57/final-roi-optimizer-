@@ -1,0 +1,19 @@
+CORRECTED DATASET REPORT
+======================================================================
+1. Tot_Fills > Tot_Clms: corrected by setting Tot_Fills = min(Tot_Fills, Tot_Clms).
+2. Original event row count preserved at 500,000.
+3. Same HCP + Medicine + Purchase_Date duplicates were NOT deleted: they can represent multiple claims/events on the same day. They should not be treated as a hard data error unless an event-level unique key is required.
+4. Medicine duplicate reported by the old EDA disappears when Dosage_Form is included in the product key; MED061 and MED062 differ by dosage form and price.
+5. Cost outliers were retained because an outlier is not automatically an error; deleting them would distort the prescription-cost distribution.
+
+rows: 500000
+fills_gt_claims: 0
+negative_claims: 0
+negative_fills: 0
+negative_quantity: 0
+negative_cost: 0
+missing_cells: 0
+duplicate_hcp_medicine_date_rows: 7460
+valid_med_ids_pct: 100.0
+valid_hcp_ids_pct: 100.0
+medicine_composite_duplicates_including_dosage_form: 0

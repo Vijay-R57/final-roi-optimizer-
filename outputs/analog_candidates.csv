@@ -1,0 +1,5 @@
+Rank,medicine_id,generic_name,brand_name,therapeutic_class,dosage_form,strength,Segment_Tier,Profile_Similarity,Behavior_Similarity,Data_Quality,Final_Analog_Score,Historical_Events,Active_HCPs,Historical_Months,Quality_Status
+1,MED008,Pravastatin,Prava,Lipid Lowering,Tablet,10 mg,1,0.9371,0.9577,0.9,0.9367,8031,5122,33,OK
+2,MED006,Simvastatin,Simva,Lipid Lowering,Tablet,10 mg,1,0.9115,0.5439,0.8112,0.8045,7227,4784,33,OK
+3,MED010,Ezetimibe,Ezetra,Lipid Lowering,Tablet,10 mg,1,0.705,0.5736,0.8391,0.6923,7490,4879,33,OK
+4,MED004,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,10 mg,1,0.9267,0.2287,0.1,0.6282,2864,2426,33,OK
