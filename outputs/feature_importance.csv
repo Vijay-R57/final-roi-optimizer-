@@ -1,21 +1,21 @@
 Feature,Importance,Group
-analog_total_qty,0.079517186,Analog Behavior
-months_since_last_analog,0.07537125,Frequency/Recency
-analog_recency,0.04079604,Analog Behavior
-hcp_prior_qty_mean,0.037335936,Rolling Stats
-analog_total_dcost,0.029424043,Analog Behavior
-month_sin,0.026020011,Seasonality
-analog_share,0.024953043,Analog Behavior
-analog_r6m,0.02429606,Analog Behavior
-month_cos,0.023685122,Seasonality
-analog_total_benes,0.020451251,Analog Behavior
-analog_active_months,0.020091375,Analog Behavior
-class_r12m,0.018136503,Therapeutic Class
-hcp_r1m_claims,0.017492546,HCP Behavior
-trend_slope_12m,0.015466861,Trend
-analog_total_claims,0.014667751,Analog Behavior
-analog_avg_qty,0.013419616,Analog Behavior
-class_r6m,0.012429795,Therapeutic Class
-class_total_qty,0.011952097,Therapeutic Class
-class_r3m,0.011389984,Therapeutic Class
-pfreq_12m,0.010947916,Frequency/Recency
+analog_total_dcost,0.09751813,Analog Behavior
+months_since_last_analog,0.054998875,Frequency/Recency
+analog_total_qty,0.053284064,Analog Behavior
+hcp_prior_qty_mean,0.032614972,Rolling Stats
+analog_recency,0.031355567,Analog Behavior
+analog_total_benes,0.028584825,Analog Behavior
+analog_r6m,0.025557537,Analog Behavior
+analog_share,0.018969193,Analog Behavior
+analog_total_claims,0.01738302,Analog Behavior
+month_sin,0.017252382,Seasonality
+beneficiaries_mean_6m,0.016561128,Rolling Stats
+drug_cost_mean_6m,0.014637467,Rolling Stats
+claims_mean_6m,0.014408885,Rolling Stats
+hcp_r1m_claims,0.014014335,HCP Behavior
+month_cos,0.013789867,Seasonality
+analog_active_months,0.013691155,Analog Behavior
+spec_class_qty,0.013378999,Therapeutic Class
+analog_avg_qty,0.0129985325,Analog Behavior
+hcp_total_dcost,0.012741294,HCP Behavior
+days_supply_mean_6m,0.0124463625,Rolling Stats
