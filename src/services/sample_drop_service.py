@@ -20,7 +20,6 @@ from sklearn.metrics import (
     precision_recall_curve, precision_score, r2_score,
     recall_score, roc_auc_score,
 )
-from xgboost import XGBClassifier, XGBRegressor
 
 from src.allocation import allocate
 from src.config import (
@@ -597,17 +596,14 @@ class SampleDropService:
                    "12M Avg (x3)":test_df["qty_mean_12m"]*3}
         baseline_metrics={n:_reg_metrics(y_te_raw,p) for n,p in baselines.items()}
 
-        # ── 19. Classifiers (imbalance-aware) ─────────────────────────────
+        # ── 19. Classifiers (CatBoost exclusive) ──────────────────────────
         pos_ratio=float(y_tr_clf.mean())
         spw=max(1.0,(1-pos_ratio)/pos_ratio) if pos_ratio>0 else 1.0
-        classifiers={"XGBoost":XGBClassifier(n_estimators=150,max_depth=5,
-                                              learning_rate=0.08,scale_pos_weight=spw,
-                                              subsample=0.8,colsample_bytree=0.8,
-                                              random_state=42,n_jobs=-1),
-                     "CatBoost":CatBoostClassifier(iterations=150,depth=5,
-                                                   learning_rate=0.08,
-                                                   class_weights=[1.0,spw],
-                                                   verbose=False,random_seed=42)}
+        classifiers={
+            "CatBoost": CatBoostClassifier(iterations=150, depth=5, learning_rate=0.08,
+                                           class_weights=[1.0, spw], verbose=False,
+                                           random_seed=42, thread_count=-1)
+        }
         clf_val_metrics={}; clf_test_metrics={}; clf_fitted={}
         for name,clf in classifiers.items():
             clf.fit(X_tr,y_tr_clf); clf_fitted[name]=clf
@@ -619,21 +615,16 @@ class SampleDropService:
                              "Precision":float(precision_score(sy,pred,zero_division=0)),
                              "Recall":float(recall_score(sy,pred)),
                              "Accuracy":float(accuracy_score(sy,pred))}
-        best_clf_name=max(clf_val_metrics,key=lambda n:clf_val_metrics[n]["PR-AUC"])
+        best_clf_name="CatBoost"
         best_clf=clf_fitted[best_clf_name]
 
-        # ── 20. Direct regressors (raw + log1p) ───────────────────────────
-        rp = dict(n_estimators=150, max_depth=5, learning_rate=0.08,
-                  min_child_weight=1, gamma=0.0, reg_alpha=0.0,
-                  reg_lambda=1.5, subsample=0.8, colsample_bytree=0.8)
+        # ── 20. Direct regressors (CatBoost exclusive) ────────────────────
         direct_regs = {
-            "XGBoost": XGBRegressor(**rp, random_state=42, n_jobs=-1),
             "CatBoost": CatBoostRegressor(iterations=150, depth=5, learning_rate=0.08,
                                           l2_leaf_reg=3.0, thread_count=-1,
                                           verbose=False, random_seed=42)
         }
         direct_regs_log = {
-            "XGBoost": XGBRegressor(**rp, random_state=42, n_jobs=-1),
             "CatBoost": CatBoostRegressor(iterations=150, depth=5, learning_rate=0.08,
                                           l2_leaf_reg=3.0, thread_count=-1,
                                           verbose=False, random_seed=42)
@@ -648,10 +639,9 @@ class SampleDropService:
             dvl_m[name]=_reg_metrics(y_vl_raw,np.expm1(np.maximum(reg.predict(X_vl),0)))
             dtl_m[name]=_reg_metrics(y_te_raw,np.expm1(np.maximum(reg.predict(X_te),0)))
 
-        # ── 21. Two-stage ─────────────────────────────────────────────────
+        # ── 21. Two-stage (CatBoost exclusive) ───────────────────────────
         pos_tr=y_tr_clf>0
         two_regs = {
-            "XGBoost": XGBRegressor(**rp, random_state=42, n_jobs=-1),
             "CatBoost": CatBoostRegressor(iterations=150, depth=5, learning_rate=0.08,
                                           l2_leaf_reg=3.0, thread_count=-1,
                                           verbose=False, random_seed=42)
@@ -709,15 +699,8 @@ class SampleDropService:
             pipeline_val_ndcg[pk] = rm_val[100]["NDCG"]
             pipeline_scores[pk] = tv_m[n]["R2"]
 
-        # Constrained validation-only optimization: preserve the current
-        # DirectLog_XGBoost ranking within a small tolerance, then maximize R2.
-        ranking_reference = pipeline_val_ndcg.get('DirectLog_XGBoost', 0.0)
-        ranking_floor = ranking_reference - 0.01
-        eligible_pipelines = [pk for pk in pipeline_scores
-                              if pipeline_val_ndcg.get(pk, 0.0) >= ranking_floor]
-        if not eligible_pipelines:
-            eligible_pipelines = list(pipeline_scores)
-        best_pipeline = max(eligible_pipelines, key=lambda pk: pipeline_r2[pk])
+        # Select best performing CatBoost pipeline variant (Direct, DirectLog, or TwoStage)
+        best_pipeline = max(pipeline_scores, key=lambda pk: pipeline_r2[pk])
 
         uses_two_stage=best_pipeline.startswith("TwoStage_")
         uses_log      =best_pipeline.startswith("DirectLog_")
@@ -914,9 +897,9 @@ class SampleDropService:
         top_vl=np.sort(y_vl_raw.values)[::-1][n_top_v-1]
         y_vl_pot=(y_vl_raw>=top_vl).astype(int)
         spw_p=max(1.0,(1-y_tr_pot.mean())/y_tr_pot.mean()) if y_tr_pot.mean()>0 else 1.0
-        pot_model=XGBClassifier(n_estimators=150,max_depth=5,learning_rate=0.08,
-                                 scale_pos_weight=spw_p,subsample=0.8,colsample_bytree=0.8,
-                                 random_state=42,n_jobs=-1)
+        pot_model = CatBoostClassifier(iterations=150, depth=5, learning_rate=0.08,
+                                       class_weights=[1.0, spw_p], verbose=False,
+                                       random_seed=42, thread_count=-1)
         Xp_tr=train_df[pot_feats].fillna(0); Xp_vl=val_df[pot_feats].fillna(0)
         pot_model.fit(Xp_tr,y_tr_pot)
         val_pot_prob=pot_model.predict_proba(Xp_vl)[:,1]
