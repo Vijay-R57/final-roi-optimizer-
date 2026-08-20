@@ -1,21 +1,21 @@
 Feature,Importance,Group
-months_since_last_analog,23.868176432464853,Frequency/Recency
-analog_total_qty,11.352803837874122,Analog Behavior
-hcp_prior_qty_mean,10.797984969816067,Rolling Stats
-analog_total_dcost,10.547378694434746,Analog Behavior
-analog_recency,9.84235309827327,Analog Behavior
-month_sin,5.425587760951695,Seasonality
-analog_total_benes,4.737652206446011,Analog Behavior
-analog_r6m,3.089756516879356,Analog Behavior
-month_cos,2.4975330862755234,Seasonality
-analog_total_claims,2.345271587913172,Analog Behavior
-analog_frequency,2.212901911963216,Analog Behavior
-analog_share,2.0359001335565723,Analog Behavior
-analog_active_months,1.386631605560308,Analog Behavior
-pfreq_12m,1.292368469297907,Frequency/Recency
-qty_std_12m,1.1030756605690983,Rolling Stats
-class_growth_6m,1.0038068154045525,Trend
-analog_avg_qty,0.9855181852786651,Analog Behavior
-trend_slope_12m,0.6964902137839935,Trend
-qty_mean_12m,0.5411952420919564,Rolling Stats
-qty_std_6m,0.4207771646087957,Rolling Stats
+months_since_last_analog,25.910354737323015,Frequency/Recency
+analog_total_qty,13.264919569182219,Analog Behavior
+analog_recency,11.362923092882204,Analog Behavior
+hcp_prior_qty_mean,8.900325175175427,Rolling Stats
+analog_total_dcost,8.58381074883301,Analog Behavior
+month_sin,4.505649682584762,Seasonality
+month_cos,3.548054245214711,Seasonality
+analog_total_claims,3.4313229826408773,Analog Behavior
+analog_r6m,3.2017824022282455,Analog Behavior
+analog_total_benes,3.139391042053479,Analog Behavior
+analog_frequency,1.8259296813910537,Analog Behavior
+analog_share,1.7558742818795678,Analog Behavior
+analog_active_months,1.7056144137560687,Analog Behavior
+analog_avg_qty,1.6651639256261463,Analog Behavior
+qty_std_12m,1.5680164169348165,Rolling Stats
+qty_mean_12m,1.1860515674130196,Rolling Stats
+pfreq_12m,1.0224039614611582,Frequency/Recency
+trend_slope_12m,0.7746258270460175,Trend
+hcp_total_dcost,0.1576513547165926,HCP Behavior
+qty_mean_6m,0.1279863555197175,Rolling Stats

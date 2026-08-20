@@ -1,9 +1,98 @@
 Rank,medicine_id,generic_name,brand_name,therapeutic_class,dosage_form,strength,Segment_Tier,Profile_Similarity,Behavior_Similarity,Data_Quality,Final_Analog_Score,Historical_Events,Active_HCPs,Historical_Months,Quality_Status
-1,MED016,Sitagliptin,Sitaglo,Antidiabetic,Tablet,100 mg,2,0.8468,0.9166,0.9,0.8722,8947,5052,33,OK
-2,MED018,Linagliptin,Lina,Antidiabetic,Tablet,5 mg,2,0.8627,0.4454,0.5361,0.7094,5770,3834,33,OK
-3,MED020,Dapagliflozin,Dapa,Antidiabetic,Tablet,10 mg,2,0.8307,0.4457,0.6124,0.7017,6270,4126,33,OK
-4,MED019,Empagliflozin,Empa,Antidiabetic,Tablet,10 mg,2,0.812,0.458,0.4461,0.6686,5085,3607,33,OK
-5,MED015,Gliclazide,Glicla,Antidiabetic,Tablet,80 mg,2,0.508,0.7131,0.7821,0.6004,7768,4654,33,OK
-6,MED017,Vildagliptin,Vilda,Antidiabetic,Tablet,50 mg,2,0.8641,0.2558,0.1,0.5974,3279,2538,33,OK
-7,MED013,Glimepiride,Glimep,Antidiabetic,Tablet,1 mg,2,0.3793,0.6779,0.6224,0.4904,6373,4142,33,OK
-8,MED014,Glimepiride,Glimep,Antidiabetic,Tablet,2 mg,2,0.4622,0.2811,0.5935,0.4366,6167,4037,33,OK
+1,MED015,Gliclazide,Glicla,Antidiabetic,Tablet,80 mg,4,0.7955,0.7097,0.7444,0.7664,7768,4654,33,OK
+2,MED078,Aceclofenac,Aceclo,Analgesic,Tablet,100 mg,4,0.8192,0.6419,0.7019,0.7573,7101,4257,33,OK
+3,MED077,Diclofenac,Diclac,Analgesic,Tablet,50 mg,4,0.7043,0.6238,0.6396,0.6745,5990,3815,33,OK
+4,MED008,Pravastatin,Prava,Lipid Lowering,Tablet,10 mg,4,0.556,0.7824,0.779,0.646,8031,5122,33,OK
+5,MED026,Telmisartan,Telma,Antihypertensive,Tablet,80 mg,4,0.5596,0.6715,0.8358,0.629,9213,5590,33,OK
+6,MED024,Losartan,Losar,Antihypertensive,Tablet,100 mg,4,0.765,0.3782,0.4681,0.6238,3512,2835,33,OK
+7,MED094,Carbamazepine,Carba,CNS / Neurology,Tablet,200 mg,4,0.7244,0.4926,0.4065,0.6188,3148,2184,33,OK
+8,MED013,Glimepiride,Glimep,Antidiabetic,Tablet,1 mg,4,0.571,0.7001,0.6721,0.6185,6373,4142,33,OK
+9,MED060,Theophylline,Theo,Respiratory,Tablet,200 mg,4,0.7241,0.4621,0.455,0.6182,3723,2400,33,OK
+10,MED098,Topiramate,Topi,CNS / Neurology,Tablet,50 mg,4,0.6147,0.612,0.6393,0.6177,6462,3533,33,OK
+11,MED044,Esomeprazole,Eso,Gastrointestinal,Tablet,40 mg,4,0.581,0.673,0.6533,0.6149,6393,3811,33,OK
+12,MED105,Hydroxyzine,Hydro,Dermatology / Allergy,Tablet,25 mg,4,0.6359,0.614,0.5117,0.6118,4363,2788,33,OK
+13,MED102,Fexofenadine,Fexo,Dermatology / Allergy,Tablet,120 mg,4,0.7955,0.403,0.2232,0.6115,1682,1340,33,OK
+14,MED084,Levothyroxine,Thyro,Thyroid,Tablet,100 mcg,4,0.826,0.2681,0.3159,0.61,2183,1972,33,OK
+15,MED095,Sodium Valproate,Valpa,CNS / Neurology,Tablet,200 mg,4,0.7214,0.4259,0.47,0.6098,3889,2496,33,OK
+16,MED006,Simvastatin,Simva,Lipid Lowering,Tablet,10 mg,4,0.5651,0.6403,0.7366,0.6096,7227,4784,33,OK
+17,MED012,Metformin,Metfor,Antidiabetic,Tablet,1000 mg,4,0.572,0.6528,0.6866,0.6094,6672,4223,33,OK
+18,MED052,Montelukast,Monte,Respiratory,Tablet,10 mg,4,0.572,0.6805,0.6323,0.6082,6396,3452,33,OK
+19,MED080,Etoricoxib,Etor,Analgesic,Tablet,90 mg,4,0.7602,0.3377,0.4225,0.6039,3178,2422,33,OK
+20,MED073,Ibuprofen,Ibu,Analgesic,Tablet,200 mg,4,0.6705,0.4661,0.5205,0.5969,4292,2998,33,OK
+21,MED009,Pravastatin,Prava,Lipid Lowering,Tablet,20 mg,4,0.4393,0.7882,0.9,0.5956,10816,6100,33,OK
+22,MED001,Atorvastatin,Newstat,Lipid Lowering,Tablet,10 mg,4,0.4987,0.6895,0.7987,0.5914,8476,5261,33,OK
+23,MED014,Glimepiride,Glimep,Antidiabetic,Tablet,2 mg,4,0.5807,0.5563,0.6589,0.5864,6167,4037,33,OK
+24,MED101,Loratadine,Lora,Dermatology / Allergy,Tablet,10 mg,4,0.5751,0.5639,0.6515,0.5838,6658,3632,33,OK
+25,MED023,Losartan,Losar,Antihypertensive,Tablet,50 mg,4,0.7252,0.3201,0.4391,0.581,3236,2638,33,OK
+26,MED043,Pantoprazole,Panto,Gastrointestinal,Tablet,40 mg,4,0.6351,0.5037,0.484,0.5796,3855,2767,33,OK
+27,MED034,Aspirin,Aspira,Antiplatelet,Tablet,150 mg,4,0.7043,0.3318,0.4835,0.578,3738,2870,33,OK
+28,MED045,Rabeprazole,Rabe,Gastrointestinal,Tablet,20 mg,4,0.5651,0.5874,0.5658,0.5708,4920,3273,33,OK
+29,MED031,Clopidogrel,Clopi,Antiplatelet,Tablet,75 mg,4,0.7214,0.3192,0.3626,0.567,2607,2121,33,OK
+30,MED048,Sucralfate,Sucral,Gastrointestinal,Tablet,1 g,4,0.5797,0.5306,0.5601,0.5645,4828,3245,33,OK
+31,MED025,Telmisartan,Telma,Antihypertensive,Tablet,40 mg,4,0.5964,0.4565,0.6057,0.5628,5168,3773,33,OK
+32,MED054,Levocetirizine,Levo,Respiratory,Tablet,5 mg,4,0.5751,0.5273,0.5601,0.5609,5186,2984,33,OK
+33,MED016,Sitagliptin,Sitaglo,Antidiabetic,Tablet,100 mg,4,0.395,0.8163,0.798,0.5607,8947,5052,33,OK
+34,MED007,Simvastatin,Simva,Lipid Lowering,Tablet,20 mg,4,0.4801,0.6292,0.7363,0.5558,7217,4783,33,OK
+35,MED072,Paracetamol,Parac,Analgesic,Tablet,650 mg,4,0.5547,0.5311,0.5802,0.5526,5061,3416,33,OK
+36,MED074,Ibuprofen,Ibu,Analgesic,Tablet,400 mg,4,0.6261,0.4141,0.4672,0.5492,3647,2682,33,OK
+37,MED028,Ramipril,Ramip,Antihypertensive,Tablet,5 mg,4,0.5802,0.4248,0.6112,0.546,5241,3817,33,OK
+38,MED049,Ondansetron,Ondra,Gastrointestinal,Tablet,4 mg,4,0.5782,0.4862,0.5049,0.5442,4112,2888,33,OK
+39,MED038,Dipyridamole,Dipy,Antiplatelet,Tablet,75 mg,4,0.654,0.363,0.4051,0.5439,2961,2382,33,OK
+40,MED037,Cilostazol,Cilo,Antiplatelet,Tablet,100 mg,4,0.691,0.2678,0.413,0.5435,3034,2428,33,OK
+41,MED033,Aspirin,Aspira,Antiplatelet,Tablet,75 mg,4,0.6705,0.3166,0.4016,0.5417,2920,2374,33,OK
+42,MED103,Fexofenadine,Fexo,Dermatology / Allergy,Tablet,180 mg,4,0.6983,0.2948,0.2713,0.5334,1990,1549,33,OK
+43,MED011,Metformin,Metfor,Antidiabetic,Tablet,500 mg,4,0.5751,0.449,0.5061,0.5332,4024,2988,33,OK
+44,MED021,Amlodipine,Amlo,Antihypertensive,Tablet,5 mg,4,0.5607,0.4147,0.5944,0.5292,4998,3703,33,OK
+45,MED030,Bisoprolol,Biso,Antihypertensive,Tablet,5 mg,4,0.5768,0.4216,0.5152,0.5288,4013,3153,33,OK
+46,MED076,Naproxen,Napro,Analgesic,Tablet,500 mg,4,0.572,0.3847,0.5894,0.5278,5267,3427,33,OK
+47,MED003,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,5 mg,4,0.5313,0.4892,0.5762,0.5275,4751,3577,33,OK
+48,MED051,Salbutamol,Salbu,Respiratory,Tablet,4 mg,4,0.5607,0.476,0.4776,0.527,4011,2514,33,OK
+49,MED050,Domperidone,Dompi,Gastrointestinal,Tablet,10 mg,4,0.5662,0.4751,0.4429,0.5249,3410,2513,33,OK
+50,MED100,Amitriptyline,Amit,CNS / Neurology,Tablet,10 mg,4,0.571,0.4582,0.4271,0.5212,3380,2276,33,OK
+51,MED075,Naproxen,Napro,Analgesic,Tablet,250 mg,4,0.6315,0.3495,0.3554,0.5196,2567,2055,33,OK
+52,MED113,Finasteride,Fina,Urology,Tablet,5 mg,4,0.5651,0.4391,0.4693,0.5192,3873,2499,33,OK
+53,MED099,Lamotrigine,Lamo,CNS / Neurology,Tablet,50 mg,4,0.5471,0.4659,0.469,0.5151,3839,2527,33,OK
+54,MED071,Paracetamol,Parac,Analgesic,Tablet,500 mg,4,0.5419,0.4686,0.4753,0.5136,3768,2702,33,OK
+55,MED053,Montelukast,Monte,Respiratory,Tablet,5 mg,4,0.5802,0.4314,0.3626,0.5103,2738,1944,33,OK
+56,MED088,Propylthiouracil,PTU,Thyroid,Tablet,50 mg,4,0.7084,0.2153,0.2006,0.509,1489,1399,33,OK
+57,MED055,Cetirizine,Ceti,Respiratory,Tablet,10 mg,4,0.5607,0.4212,0.4078,0.5029,3197,2150,33,OK
+58,MED047,Famotidine,Famo,Gastrointestinal,Tablet,20 mg,4,0.571,0.376,0.43,0.5011,3271,2445,33,OK
+59,MED029,Enalapril,Enal,Antihypertensive,Tablet,5 mg,4,0.571,0.3669,0.4387,0.5001,3238,2630,33,OK
+60,MED082,Levothyroxine,Thyro,Thyroid,Tablet,50 mcg,4,0.7043,0.2007,0.1817,0.5,1394,1317,33,OK
+61,MED104,Desloratadine,Deslo,Dermatology / Allergy,Tablet,5 mg,4,0.572,0.4586,0.2708,0.4985,1986,1547,33,OK
+62,MED032,Clopidogrel,Clopi,Antiplatelet,Tablet,150 mg,4,0.5471,0.3496,0.5018,0.4909,3927,3002,33,OK
+63,MED070,Metronidazole,Metro,Antibiotic,Tablet,400 mg,4,0.6261,0.2348,0.3706,0.4899,2604,2262,33,OK
+64,MED069,Ciprofloxacin,Cipro,Antibiotic,Tablet,500 mg,4,0.5797,0.2966,0.4278,0.4861,3091,2613,33,OK
+65,MED002,Atorvastatin,Newstat,Lipid Lowering,Tablet,20 mg,4,0.3314,0.6797,0.7721,0.4846,7896,5066,33,OK
+66,MED062,Amoxicillin,Amoxi,Antibiotic,Tablet,500 mg,4,0.5651,0.2819,0.4395,0.4754,3196,2691,33,OK
+67,MED085,Methimazole,Methi,Thyroid,Tablet,5 mg,4,0.5802,0.2518,0.419,0.4739,2952,2631,33,OK
+68,MED064,Cefixime,Cefix,Antibiotic,Tablet,200 mg,4,0.6351,0.207,0.2525,0.4707,1794,1606,33,OK
+69,MED022,Amlodipine,Amlo,Antihypertensive,Tablet,10 mg,4,0.5802,0.2702,0.3531,0.4686,2480,2141,33,OK
+70,MED027,Olmesartan,Olme,Antihypertensive,Tablet,20 mg,4,0.4801,0.4059,0.4928,0.4634,3766,3002,33,OK
+71,MED083,Levothyroxine,Thyro,Thyroid,Tablet,75 mcg,4,0.7167,0.0545,0.1,0.4587,1040,990,33,OK
+72,MED081,Levothyroxine,Thyro,Thyroid,Tablet,25 mcg,4,0.613,0.1579,0.3134,0.4543,2157,1972,33,OK
+73,MED010,Ezetimibe,Ezetra,Lipid Lowering,Tablet,10 mg,4,0.2711,0.6806,0.7498,0.4453,7490,4879,33,OK
+74,MED063,Azithromycin,Azithro,Antibiotic,Tablet,500 mg,4,0.5313,0.239,0.4381,0.4442,3168,2699,33,OK
+75,MED096,Levetiracetam,Leve,CNS / Neurology,Tablet,500 mg,4,0.3314,0.6214,0.598,0.4439,5659,3313,33,OK
+76,MED087,Carbimazole,Carbi,Thyroid,Tablet,10 mg,4,0.5768,0.2453,0.2068,0.4384,1520,1429,33,OK
+77,MED086,Carbimazole,Carbi,Thyroid,Tablet,5 mg,4,0.5751,0.1578,0.3048,0.4303,2093,1936,33,OK
+78,MED089,Liothyronine,Lio,Thyroid,Tablet,25 mcg,4,0.5637,0.2147,0.2505,0.4295,1767,1627,33,OK
+79,MED116,Alfuzosin,Alfu,Urology,Tablet,10 mg,4,0.4801,0.3384,0.376,0.429,2862,2011,33,OK
+80,MED017,Vildagliptin,Vilda,Antidiabetic,Tablet,50 mg,4,0.3859,0.4908,0.436,0.4196,3279,2538,33,OK
+81,MED068,Levofloxacin,Levof,Antibiotic,Tablet,500 mg,4,0.4987,0.2409,0.2829,0.4019,1972,1780,33,OK
+82,MED117,Solifenacin,Soli,Urology,Tablet,5 mg,4,0.4179,0.4048,0.3323,0.4018,2469,1804,33,OK
+83,MED004,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,10 mg,4,0.3961,0.3824,0.4005,0.3934,2864,2426,33,OK
+84,MED005,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,20 mg,4,0.2176,0.6179,0.7129,0.392,6729,4639,33,OK
+85,MED067,Clarithromycin,Clari,Antibiotic,Tablet,500 mg,4,0.3314,0.4129,0.573,0.388,4646,3604,33,OK
+86,MED065,Cefuroxime,Cefuro,Antibiotic,Tablet,500 mg,4,0.3961,0.2719,0.4756,0.377,3551,2922,33,OK
+87,MED090,Liothyronine,Lio,Thyroid,Tablet,50 mcg,4,0.4298,0.2318,0.3641,0.3704,2530,2256,33,OK
+88,MED018,Linagliptin,Lina,Antidiabetic,Tablet,5 mg,4,0.2014,0.585,0.6328,0.362,5770,3834,33,OK
+89,MED119,Mirabegron,Mira,Urology,Tablet,25 mg,4,0.3051,0.4181,0.3176,0.3352,2359,1719,33,OK
+90,MED020,Dapagliflozin,Dapa,Antidiabetic,Tablet,10 mg,4,0.1319,0.6026,0.6677,0.3299,6270,4126,33,OK
+91,MED118,Solifenacin,Soli,Urology,Tablet,10 mg,4,0.2176,0.4611,0.4277,0.31,3346,2323,33,OK
+92,MED019,Empagliflozin,Empa,Antidiabetic,Tablet,10 mg,4,0.1088,0.5479,0.5925,0.2912,5085,3607,33,OK
+93,MED035,Ticagrelor,Tica,Antiplatelet,Tablet,90 mg,4,0.2067,0.3184,0.4603,0.2726,3493,2721,33,OK
+94,MED120,Mirabegron,Mira,Urology,Tablet,50 mg,4,0.1641,0.3397,0.388,0.2416,2963,2088,33,OK
+95,MED036,Prasugrel,Prasu,Antiplatelet,Tablet,10 mg,4,0.1088,0.3791,0.4893,0.2335,3803,2907,33,OK
+96,MED097,Levetiracetam,Leve,CNS / Neurology,Tablet,1000 mg,4,0.0527,0.375,0.3308,0.175,2464,1785,33,OK
+97,MED040,Vorapaxar,Vora,Antiplatelet,Tablet,2.08 mg,4,0.0,0.3122,0.3638,0.1326,2604,2146,33,OK

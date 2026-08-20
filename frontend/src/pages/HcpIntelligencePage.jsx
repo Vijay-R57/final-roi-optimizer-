@@ -93,7 +93,7 @@ export const HcpIntelligencePage = () => {
         <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 w-full md:w-auto text-xs">
           <div>
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Selected Model</span>
-            <span className="font-bold text-blue-300">DirectLog_XGBoost</span>
+            <span className="font-bold text-blue-300">{campaignData.roi?.best_pipeline || 'Direct_CatBoost'}</span>
           </div>
           <div>
             <span className="text-[10px] text-slate-400 font-bold uppercase tracking-wider block">Validation Approach</span>

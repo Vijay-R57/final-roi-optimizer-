@@ -1,0 +1,11 @@
+Rank,HCP_ID,Specialty,Zone,Expected_3M_Demand,Potential_Score,Class_Share,Analog_Active_Months,Samples,Top_Reasons
+1,NPIIN0000008740,Diabetology,South Chennai,3.94,100.0,0.0,4,490,High recent prescription activity (top 25%) | Analog history: 4 active months | Positive 6M prescription trend
+2,NPIIN0000000586,Diabetology,South Chennai,3.12,81.5,0.0,3,399,High recent prescription activity (top 25%) | Analog history: 3 active months | Positive 6M prescription trend
+3,NPIIN0000002362,Endocrinology,Central Chennai,2.73,73.5,0.0,3,360,High recent prescription activity (top 25%) | Analog history: 3 active months
+4,NPIIN0000004976,Endocrinology,North Chennai,2.72,72.3,0.0,4,354,High recent prescription activity (top 25%) | Analog history: 4 active months | Positive 6M prescription trend
+5,NPIIN0000001831,Endocrinology,North Chennai,2.69,71.8,0.0,2,352,High recent prescription activity (top 25%) | Analog history: 2 active months | Positive 6M prescription trend
+6,NPIIN0000000909,Diabetology,Central Chennai,2.63,68.8,0.0,3,337,High recent prescription activity (top 25%) | Analog history: 3 active months
+7,NPIIN0000001944,Endocrinology,Central Chennai,2.43,66.5,0.0,5,326,High recent prescription activity (top 25%) | Analog history: 5 active months
+8,NPIIN0000008332,Endocrinology,South Chennai,2.47,66.3,0.0,4,325,High recent prescription activity (top 25%) | Analog history: 4 active months
+9,NPIIN0000009278,Diabetology,Central Chennai,2.39,65.8,0.0,4,322,High recent prescription activity (top 25%) | Analog history: 4 active months | Positive 6M prescription trend
+10,NPIIN0000005734,Endocrinology,South Chennai,2.4,65.3,0.0,2,320,High recent prescription activity (top 25%) | Analog history: 2 active months

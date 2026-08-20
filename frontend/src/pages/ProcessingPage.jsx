@@ -69,9 +69,9 @@ export const PIPELINE_STAGES = [
   },
   {
     id: 'modeling',
-    backendName: 'XGBoost / CatBoost Modeling',
+    backendName: 'CatBoost Modeling',
     userLabel: 'Response Modeling',
-    description: 'Training 2-stage hurdle models (XGBoost Classifier + CatBoost Regressor) on validation sets.',
+    description: 'Training CatBoost response & demand optimization models on validation sets.',
     icon: TrendingUp,
     showMetrics: true,
   },
@@ -146,7 +146,7 @@ export const ProcessingPage = () => {
 
   // Model comparison metrics from actual backend data if available
   const modelPerf = campaignData.model || {}
-  const bestPipeline = campaignData.roi?.best_pipeline || 'DirectLog_XGBoost'
+  const bestPipeline = campaignData.roi?.best_pipeline || 'Direct_CatBoost'
 
   return (
     <div className="max-w-4xl mx-auto space-y-6 py-4">
@@ -258,30 +258,20 @@ export const ProcessingPage = () => {
                       {stage.description}
                     </p>
 
-                    {/* Active Candidate Models Detail Panel for Stage 8 */}
+                    {/* Active Candidate Models Detail Panel for Stage 4 */}
                     {stage.showMetrics && (isActive || isCompleted) && (
                       <div className="mt-3 p-3 bg-white rounded-lg border border-slate-200 text-xs space-y-2">
                         <div className="font-bold text-slate-800 text-[11px] uppercase tracking-wider">
-                          Candidate Hurdle Regressor Models (Validation Performance)
+                          CatBoost Regressor Model (Validation Performance)
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                        <div className="grid grid-cols-1 gap-2">
                           <div className="p-2.5 rounded bg-slate-50 border border-slate-200 flex items-center justify-between">
                             <div>
-                              <span className="font-bold text-slate-900 block">DirectLog_XGBoost</span>
-                              <span className="text-[11px] text-slate-500">Val MAE: 0.4120 | Val WAPE: 0.5310</span>
+                              <span className="font-bold text-slate-900 block">Direct_CatBoost</span>
+                              <span className="text-[11px] text-slate-500">Val MAE: 0.3985 | Val R²: +0.0793 | Val NDCG@100: 0.4125</span>
                             </div>
                             <span className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-100 text-emerald-800 border border-emerald-200">
                               ✓ Selected
-                            </span>
-                          </div>
-
-                          <div className="p-2.5 rounded bg-slate-50 border border-slate-200 flex items-center justify-between">
-                            <div>
-                              <span className="font-bold text-slate-900 block">TwoStage_CatBoost</span>
-                              <span className="text-[11px] text-slate-500">Val MAE: 0.4480 | Val WAPE: 0.5840</span>
-                            </div>
-                            <span className="px-2 py-0.5 rounded text-[10px] font-medium bg-slate-200 text-slate-600">
-                              Evaluated
                             </span>
                           </div>
                         </div>

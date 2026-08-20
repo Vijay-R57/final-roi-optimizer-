@@ -120,7 +120,7 @@ export const CampaignProvider = ({ children }) => {
     const stages = [
       'Normalizing target medicine profile & therapeutic taxonomy...',
       'Running cosine similarity & hierarchical analog candidate filtering...',
-      'Training two-stage hurdle model (XGBoost Classifier + CatBoost Regressor)...',
+      'Training CatBoost response & demand optimization models...',
       'Generating HCP potential scores & demand forecasting across 12,000 doctors...',
       'Applying Largest-Remainder sample allocation algorithm (Hare-Niemeyer)...',
       'Computing promotional ROI, scenarios & break-even matrix...',
