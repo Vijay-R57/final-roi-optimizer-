@@ -1,2 +1,9 @@
 Rank,medicine_id,generic_name,brand_name,therapeutic_class,dosage_form,strength,Segment_Tier,Profile_Similarity,Behavior_Similarity,Data_Quality,Final_Analog_Score,Historical_Events,Active_HCPs,Historical_Months,Quality_Status
-1,MED023,Losartan,Losar,Antihypertensive,Tablet,50 mg,1,0.0246,0.5,0.5,0.2148,3236,2638,33,OK
+1,MED015,Gliclazide,Glicla,Antidiabetic,Tablet,80 mg,2,0.8848,0.7131,0.7821,0.8265,7768,4654,33,OK
+2,MED013,Glimepiride,Glimep,Antidiabetic,Tablet,1 mg,2,0.8576,0.6779,0.6224,0.7774,6373,4142,33,OK
+3,MED014,Glimepiride,Glimep,Antidiabetic,Tablet,2 mg,2,0.8779,0.2811,0.5935,0.686,6167,4037,33,OK
+4,MED016,Sitagliptin,Sitaglo,Antidiabetic,Tablet,100 mg,2,0.4327,0.9166,0.9,0.6237,8947,5052,33,OK
+5,MED018,Linagliptin,Lina,Antidiabetic,Tablet,5 mg,2,0.5275,0.4454,0.5361,0.5083,5770,3834,33,OK
+6,MED017,Vildagliptin,Vilda,Antidiabetic,Tablet,50 mg,2,0.6231,0.2558,0.1,0.4528,3279,2538,33,OK
+7,MED020,Dapagliflozin,Dapa,Antidiabetic,Tablet,10 mg,2,0.3726,0.4457,0.6124,0.4268,6270,4126,33,OK
+8,MED019,Empagliflozin,Empa,Antidiabetic,Tablet,10 mg,2,0.3161,0.458,0.4461,0.3711,5085,3607,33,OK

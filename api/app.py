@@ -43,8 +43,15 @@ _run_cache = {}
 def _get_svc():
     global _svc
     if _svc is None:
+        print("[Flask] Pre-loading ML dataset (500,000 event records)...")
         _svc = SampleDropService()
+        print("[Flask] ML dataset pre-loaded into memory.")
     return _svc
+
+try:
+    _get_svc()
+except Exception as _e:
+    print(f"[Flask] Startup pre-load note: {_e}")
 
 def _load_json(fname):
     p = OUTPUT_DIR / fname
@@ -52,6 +59,27 @@ def _load_json(fname):
         with open(str(p)) as f:
             return json.load(f)
     return None
+
+def _sanitize_json(obj):
+    import math
+    import numpy as np
+    if isinstance(obj, dict):
+        return {str(k): _sanitize_json(v) for k, v in obj.items()}
+    elif isinstance(obj, list):
+        return [_sanitize_json(v) for v in obj]
+    elif hasattr(obj, "to_dict"):
+        return _sanitize_json(obj.to_dict(orient="records"))
+    elif isinstance(obj, (np.integer, int)):
+        return int(obj)
+    elif isinstance(obj, (np.floating, float)):
+        if math.isnan(obj) or math.isinf(obj):
+            return 0.0
+        return float(obj)
+    elif isinstance(obj, (np.bool_, bool)):
+        return bool(obj)
+    elif isinstance(obj, np.ndarray):
+        return _sanitize_json(obj.tolist())
+    return obj
 
 def _load_csv_records(fname):
     import pandas as pd
@@ -276,9 +304,10 @@ def predict():
         print(f"[Flask] Executing dynamic ML pipeline for target: {req['medicine']['generic_name']} ({req['medicine']['brand_name']})")
         svc = _get_svc()
         res = svc.run(req)
-        _last_result = res
-        _run_cache[cache_key] = res
-        return jsonify(res)
+        res_sanitized = _sanitize_json(res)
+        _last_result = res_sanitized
+        _run_cache[cache_key] = res_sanitized
+        return jsonify(res_sanitized)
     except Exception as e:
         print(f"[Flask] Error during dynamic execution: {e}")
         return jsonify({"error": f"Pipeline execution error: {str(e)}"}), 500

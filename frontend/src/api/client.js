@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-// Dedicated axios instance with standard timeout & headers (3 minutes timeout for ML pipeline)
+// Dedicated axios instance with standard timeout & headers (5 minutes timeout for ML pipeline)
 const apiBase = import.meta.env.VITE_API_BASE_URL || '/api'
 export const apiClient = axios.create({
   baseURL: apiBase,
-  timeout: 180000,
+  timeout: 300000,
   headers: {
     'Content-Type': 'application/json',
   },

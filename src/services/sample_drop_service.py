@@ -623,47 +623,19 @@ class SampleDropService:
         best_clf=clf_fitted[best_clf_name]
 
         # ── 20. Direct regressors (raw + log1p) ───────────────────────────
-        # ── 20. Direct regressors (raw + log1p) ───────────────────────────
-        # Controlled validation-oriented tuning for the demand regression.
-        # Test data is not used for fitting or selection.
-        rp = dict(n_estimators=400, max_depth=6, learning_rate=0.03,
+        rp = dict(n_estimators=150, max_depth=5, learning_rate=0.08,
                   min_child_weight=1, gamma=0.0, reg_alpha=0.0,
-                  reg_lambda=2.0, subsample=0.9, colsample_bytree=0.9)
-        cv_r2 = _expanding_cv_r2(
-            pd.concat([X_tr, X_vl], axis=0).reset_index(drop=True),
-            np.concatenate([y_tr_raw, y_vl_raw]),
-            pd.concat([train_df.loc[X_tr.index, 'Month_Start'],
-                       val_df.loc[X_vl.index, 'Month_Start']], axis=0).reset_index(drop=True),
-            rp, folds=3)
-        if cv_r2:
-            print(f"[CV] Expanding validation R2: {[round(v,4) for v in cv_r2]} "
-                  f"mean={np.mean(cv_r2):+.4f} std={np.std(cv_r2):.4f}")
+                  reg_lambda=1.5, subsample=0.8, colsample_bytree=0.8)
         direct_regs = {
             "XGBoost": XGBRegressor(**rp, random_state=42, n_jobs=-1),
-            "XGBoost_R2_Deep": XGBRegressor(n_estimators=600, max_depth=8,
-                learning_rate=0.02, min_child_weight=1, gamma=0,
-                reg_alpha=0, reg_lambda=1, subsample=0.95,
-                colsample_bytree=0.95, random_state=43, n_jobs=-1),
-            "XGBoost_R2_Robust": XGBRegressor(n_estimators=500, max_depth=5,
-                learning_rate=0.025, min_child_weight=1, gamma=0,
-                reg_alpha=0.01, reg_lambda=1.5, subsample=0.9,
-                colsample_bytree=1.0, random_state=44, n_jobs=-1),
-            "CatBoost": CatBoostRegressor(iterations=400, depth=6, learning_rate=0.03,
-                                          l2_leaf_reg=3.0, random_strength=0.5,
+            "CatBoost": CatBoostRegressor(iterations=150, depth=5, learning_rate=0.08,
+                                          l2_leaf_reg=3.0, thread_count=-1,
                                           verbose=False, random_seed=42)
         }
         direct_regs_log = {
             "XGBoost": XGBRegressor(**rp, random_state=42, n_jobs=-1),
-            "XGBoost_R2_Deep": XGBRegressor(n_estimators=600, max_depth=8,
-                learning_rate=0.02, min_child_weight=1, gamma=0,
-                reg_alpha=0, reg_lambda=1, subsample=0.95,
-                colsample_bytree=0.95, random_state=43, n_jobs=-1),
-            "XGBoost_R2_Robust": XGBRegressor(n_estimators=500, max_depth=5,
-                learning_rate=0.025, min_child_weight=1, gamma=0,
-                reg_alpha=0.01, reg_lambda=1.5, subsample=0.9,
-                colsample_bytree=1.0, random_state=44, n_jobs=-1),
-            "CatBoost": CatBoostRegressor(iterations=400, depth=6, learning_rate=0.03,
-                                          l2_leaf_reg=3.0, random_strength=0.5,
+            "CatBoost": CatBoostRegressor(iterations=150, depth=5, learning_rate=0.08,
+                                          l2_leaf_reg=3.0, thread_count=-1,
                                           verbose=False, random_seed=42)
         }
         dv_m={}; dt_m={}; df_fit={}; dvl_m={}; dtl_m={}; dfl_fit={}
@@ -680,8 +652,8 @@ class SampleDropService:
         pos_tr=y_tr_clf>0
         two_regs = {
             "XGBoost": XGBRegressor(**rp, random_state=42, n_jobs=-1),
-            "CatBoost": CatBoostRegressor(iterations=400, depth=6, learning_rate=0.03,
-                                          l2_leaf_reg=3.0, random_strength=0.5,
+            "CatBoost": CatBoostRegressor(iterations=150, depth=5, learning_rate=0.08,
+                                          l2_leaf_reg=3.0, thread_count=-1,
                                           verbose=False, random_seed=42)
         }
         tv_m={}; tt_m={}; tf_fit={}
@@ -1243,7 +1215,8 @@ class SampleDropService:
             ]].to_dict("records"),
             "zone_distribution":zones.to_dict("records"),
             "unknown_zone_hcps":unknown_zone_df.to_dict("records"),
-            "roi":roi_out,"roi_scenarios":roi_scenarios,
+            "roi": {k: (v.to_dict("records") if hasattr(v, "to_dict") else v) for k, v in roi_out.items()},
+            "roi_scenarios":roi_scenarios,
             "total_samples":req["total_samples"],
             "allocated_samples":int(latest["Samples"].sum()),
             "validation_report":vr,"top_hcp_explanations":exp_rows,
