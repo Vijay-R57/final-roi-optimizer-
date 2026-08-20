@@ -1,8 +1,9 @@
 import axios from 'axios'
 
 // Dedicated axios instance with standard timeout & headers (3 minutes timeout for ML pipeline)
+const apiBase = import.meta.env.VITE_API_BASE_URL || '/api'
 export const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: apiBase,
   timeout: 180000,
   headers: {
     'Content-Type': 'application/json',
@@ -28,7 +29,7 @@ apiClient.interceptors.response.use(
     } else if (error.code === 'ECONNABORTED') {
       friendlyMessage = 'Optimization request timed out. The ML pipeline may still be training.'
     } else if (error.request) {
-      friendlyMessage = 'Unable to reach the local API server (http://localhost:5000). Please check backend status.'
+      friendlyMessage = `Unable to reach the API server (${apiBase}). Please check backend status.`
     }
 
     const enhancedError = new Error(friendlyMessage)

@@ -8,15 +8,32 @@ from pathlib import Path
 # Ensure project root is on path
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
 
 from src.services.sample_drop_service import SampleDropService
 
-app = Flask(__name__)
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+OUTPUT_DIR = PROJECT_ROOT / "outputs"
+FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
+
+app = Flask(
+    __name__,
+    static_folder=str(FRONTEND_DIST) if FRONTEND_DIST.exists() else None,
+    static_url_path="/"
+)
 CORS(app)
 
-OUTPUT_DIR = Path(__file__).resolve().parents[1] / "outputs"
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def serve_frontend(path):
+    if path and path.startswith("api/"):
+        return jsonify({"error": "API route not found"}), 404
+    if FRONTEND_DIST.exists() and path and (FRONTEND_DIST / path).exists():
+        return send_from_directory(str(FRONTEND_DIST), path)
+    if FRONTEND_DIST.exists() and (FRONTEND_DIST / "index.html").exists():
+        return send_from_directory(str(FRONTEND_DIST), "index.html")
+    return jsonify({"service": "Sample Drop Optimization API", "status": "ok"})
 
 # ── Singleton service (loads data once) ──────────────────────────────────────
 _svc = None
@@ -340,5 +357,6 @@ def model_performance():
 
 
 if __name__ == "__main__":
-    print("[Flask] Starting Sample Drop Optimization API on http://localhost:5000")
-    app.run(debug=False, port=5000, host="0.0.0.0")
+    port = int(os.environ.get("PORT", 5000))
+    print(f"[Flask] Starting Sample Drop Optimization API on http://0.0.0.0:{port}")
+    app.run(debug=False, port=port, host="0.0.0.0")
