@@ -3,7 +3,7 @@ services:
     name: final-roi-optimizer
     runtime: python
     plan: free
-    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && node ./node_modules/vite/bin/vite.js build && cd .."
+    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && npx --no-install vite build && cd .."
     startCommand: "python start.py"
     envVars:
       - key: PORT
