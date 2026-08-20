@@ -74,21 +74,25 @@ def calculate_scenarios(predicted_demand, total_samples, price,
     }
 
 
-def sensitivity_matrix(predicted_demand, total_samples,
-                        sample_cost=0, units=1, var_cost=0):
+def sensitivity_matrix(predicted_demand, total_samples, price=120.0,
+                        sample_cost=0, units=1, var_cost=0, prices=None):
     """
     Rows: sample lift values
-    Cols: medicine price values
+    Cols: medicine price values (dynamically centered around target price)
     Cell: projected ROI %
     """
-    lifts  = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50]
-    prices = [80, 120, 160, 200, 250, 300]
-    rows   = []
+    lifts = [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50]
+    if prices is None:
+        base_px = max(10.0, float(price))
+        # Compute dynamic price multipliers: 50%, 75%, 100%, 125%, 150%, 200%
+        prices = sorted(list(set([round(base_px * r, 1) for r in [0.5, 0.75, 1.0, 1.25, 1.5, 2.0]])))
+
+    rows = []
     for lift in lifts:
         row = {"Sample_Lift": f"{int(lift*100)}%"}
-        for price in prices:
-            r = _single(predicted_demand, total_samples, price,
+        for px in prices:
+            r = _single(predicted_demand, total_samples, px,
                         sample_cost, units, lift, var_cost)
-            row[f"Price_{price}"] = round(r["projected_roi_percent"], 1)
+            row[f"Price_{px}"] = round(r["projected_roi_percent"], 1)
         rows.append(row)
     return pd.DataFrame(rows)

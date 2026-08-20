@@ -27,6 +27,9 @@ from src.config import (
     MIN_ACTIVE_PRESCRIBERS, MIN_EVENTS, MIN_MONTHS_HISTORY,
     OUTPUT_DIR, TOP_N_HCPS, MAX_SAMPLES_PER_HCP,
     PREDICTION_COLLAPSE_THRESHOLD,
+    TRAIN_SPLIT_RATIO, VAL_SPLIT_RATIO,
+    BLEND_WEIGHT_CANDIDATES, DEFAULT_BLEND_DEMAND_WEIGHT,
+    POTENTIAL_TIER_THRESHOLDS,
 )
 from src.data.loader import load_data
 from src.data.schema_mapper import (
@@ -507,8 +510,8 @@ class SampleDropService:
         trainable = all_months[:-3]
         tb = agg[agg["Month_Start"].isin(trainable)].copy()
         dates = sorted(tb["Month_Start"].unique())
-        cut1  = dates[int(len(dates)*0.70)-1]
-        cut2  = dates[int(len(dates)*0.85)-1]
+        cut1  = dates[int(len(dates)*TRAIN_SPLIT_RATIO)-1]
+        cut2  = dates[int(len(dates)*VAL_SPLIT_RATIO)-1]
         tr  = tb["Month_Start"]<=cut1
         vl  = (tb["Month_Start"]>cut1)&(tb["Month_Start"]<=cut2)
         te  = tb["Month_Start"]>cut2
@@ -963,8 +966,8 @@ class SampleDropService:
                   else np.maximum(best_final_reg.predict(X_vl),0)),0)
         dm,dx=vd.min(),vd.max(); vd_n=(vd-dm)/(dx-dm+1e-9)
         pm,px=val_pot_prob.min(),val_pot_prob.max(); vp_n=(val_pot_prob-pm)/(px-pm+1e-9)
-        best_wd,best_ndcg=0.70,-1.0
-        for wd in [0.50,0.60,0.70,0.80,0.90]:
+        best_wd,best_ndcg=DEFAULT_BLEND_DEMAND_WEIGHT,-1.0
+        for wd in BLEND_WEIGHT_CANDIDATES:
             bl=wd*vd_n+(1-wd)*vp_n
             rm_tmp,_,_=ranking_metrics(y_vl_raw.values,bl,ks=[100])
             if rm_tmp[100]["NDCG"]>best_ndcg:
@@ -983,9 +986,9 @@ class SampleDropService:
         inf_df["Potential_Score"]=((inf_df["final_hcp_score"]-mn_f)/(mx_f-mn_f+1e-9)*100).round(1)
         inf_df["hcp_potential_score_raw"]=(inf_df["raw_potential"]*100).round(1)
         def _scat(s):
-            if s>=80: return "Very High"
-            if s>=60: return "High"
-            if s>=40: return "Medium"
+            if s>=POTENTIAL_TIER_THRESHOLDS["Very High"]: return "Very High"
+            if s>=POTENTIAL_TIER_THRESHOLDS["High"]: return "High"
+            if s>=POTENTIAL_TIER_THRESHOLDS["Medium"]: return "Medium"
             return "Low"
         inf_df["Potential_Category"]=inf_df["Potential_Score"].apply(_scat)
 

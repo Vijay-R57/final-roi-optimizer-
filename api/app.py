@@ -197,21 +197,22 @@ def _get_default_result(req):
         "validation": _load_json("validation_report.json") or {},
     }
 
-# ── Full prediction pipeline ───────────────────────────────────────────────────
+# ── Full prediction pipeline (Dynamic Execution) ──────────────────────────────
 @app.route("/api/predict", methods=["POST"])
 def predict():
     global _last_result
     data = request.get_json() or {}
     req = {
         "medicine": {
-            "generic_name":      data.get("generic_name", "Atorvastatin"),
-            "brand_name":        data.get("brand_name", "Newstat"),
-            "therapeutic_class": data.get("therapeutic_class", "Lipid Lowering"),
+            "generic_name":      data.get("generic_name", "Metformin"),
+            "brand_name":        data.get("brand_name", "Glycomet"),
+            "therapeutic_class": data.get("therapeutic_class", "Antidiabetic"),
             "dosage_form":       data.get("dosage_form", "Tablet"),
-            "strength":          data.get("strength", "10 mg"),
+            "strength":          data.get("strength", "500 mg"),
+            "unit_price":        float(data.get("medicine_price", 95)),
         },
         "total_samples":                  int(data.get("total_samples", 10000)),
-        "medicine_price":                 float(data.get("medicine_price", 120)),
+        "medicine_price":                 float(data.get("medicine_price", 95)),
         "sample_cost":                    float(data.get("sample_cost", 0.0587)),
         "expected_sample_lift":           float(data.get("sample_lift", 0.10)),
         "average_units_per_prescription": float(data.get("units_per_rx", 2)),
@@ -228,20 +229,21 @@ def predict():
     )
 
     if cache_key in _run_cache:
-        print(f"[Flask] Returning cached pipeline result for {cache_key}")
+        print(f"[Flask] Returning cached dynamic pipeline result for {cache_key}")
         return jsonify(_run_cache[cache_key])
 
-    # Check if pre-run or default matches
-    if _last_result:
-        print("[Flask] Returning pre-computed pipeline result")
-        res_json = _build_response_json(req, _last_result)
+    try:
+        print(f"[Flask] Executing dynamic ML pipeline for target: {req['medicine']['generic_name']} ({req['medicine']['brand_name']})")
+        svc = _get_svc()
+        res = svc.run(req)
+        _last_result = res
+        _run_cache[cache_key] = res
+        return jsonify(res)
+    except Exception as e:
+        print(f"[Flask] Error during dynamic execution: {e}. Falling back to default output.")
+        res_json = _get_default_result(req)
         _run_cache[cache_key] = res_json
         return jsonify(res_json)
-
-    # Return instant fast response backed by pre-computed ML outputs
-    res_json = _get_default_result(req)
-    _run_cache[cache_key] = res_json
-    return jsonify(res_json)
 
 
 # ── Top 100 HCPs ───────────────────────────────────────────────────────────────

@@ -59,6 +59,35 @@ ROI_SCENARIOS = {
 }
 
 # ---------------------------------------------------------------------------
+# Machine Learning & Pipeline Hyperparameters (Data-driven, configurable)
+# ---------------------------------------------------------------------------
+TRAIN_SPLIT_RATIO = 0.70
+VAL_SPLIT_RATIO   = 0.85
+
+BLEND_WEIGHT_CANDIDATES = [0.50, 0.60, 0.70, 0.80, 0.90]
+DEFAULT_BLEND_DEMAND_WEIGHT    = 0.70
+DEFAULT_BLEND_POTENTIAL_WEIGHT = 0.30
+
+POTENTIAL_TIER_THRESHOLDS = {
+    "Very High": 80,
+    "High": 60,
+    "Medium": 40,
+    "Low": 0,
+}
+
+COMPOSITE_ANALOG_WEIGHTS = {
+    "final_score": 0.50,
+    "events":      0.30,
+    "hcps":        0.20,
+}
+
+DATA_QUALITY_WEIGHTS = {
+    "events":      0.50,
+    "active_hcps": 0.30,
+    "months":      0.20,
+}
+
+# ---------------------------------------------------------------------------
 # Prediction collapse detection
 # ---------------------------------------------------------------------------
 PREDICTION_COLLAPSE_THRESHOLD = 0.10
