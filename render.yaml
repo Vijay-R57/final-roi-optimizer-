@@ -3,7 +3,7 @@ services:
     name: final-roi-optimizer
     runtime: python
     plan: free
-    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && npx --no-install vite build && cd .."
+    buildCommand: "pip install -r requirements.txt"
     startCommand: "python start.py"
     envVars:
       - key: PORT
