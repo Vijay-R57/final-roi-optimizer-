@@ -249,6 +249,25 @@ class SampleDropService:
                 and r.get("Historical_Months",0)>=MIN_MONTHS_HISTORY
             ) else "INSUFFICIENT", axis=1)
         analog_cands_df.to_csv(str(OUTPUT_DIR/"analog_candidates.csv"),index=False)
+        cands_records = []
+        for i, r in enumerate(analog_cands_df.head(10).to_dict("records"), 1):
+            cands_records.append({
+                "rank": i,
+                "medicine_id": r.get(C_MED_ID, ""),
+                "generic_name": r.get(C_GNRC, ""),
+                "brand_name": r.get(C_BRAND, ""),
+                "therapeutic_class": r.get(C_TC, ""),
+                "dosage_form": r.get(C_FORM, ""),
+                "strength": r.get(C_STR, ""),
+                "tier": r.get("Segment_Tier", ""),
+                "profile_similarity": float(r.get("Profile_Similarity", 0.9)),
+                "behavior_similarity": float(r.get("Behavior_Similarity", 0.9)),
+                "data_quality": float(r.get("Data_Quality", 0.9)),
+                "final_analog_score": float(r.get("Final_Analog_Score", 0.9)),
+                "historical_events": int(r.get("Historical_Events", 0)),
+                "active_hcps": int(r.get("Active_HCPs", 0)),
+                "historical_months": int(r.get("Historical_Months", 0)),
+            })
 
         # ── 7. HCP × Month panel for selected analog ──────────────────────
         ev = self.events[self.events[C_MED_ID]==analog[C_MED_ID]].copy()
@@ -1200,6 +1219,7 @@ class SampleDropService:
             "unknown_zone_hcps":unknown_zone_df.to_dict("records"),
             "roi": {k: (v.to_dict("records") if hasattr(v, "to_dict") else v) for k, v in roi_out.items()},
             "roi_scenarios":roi_scenarios,
+            "analog_candidates": cands_records,
             "total_samples":req["total_samples"],
             "allocated_samples":int(latest["Samples"].sum()),
             "validation_report":vr,"top_hcp_explanations":exp_rows,

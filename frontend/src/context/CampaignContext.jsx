@@ -235,7 +235,7 @@ export const CampaignProvider = ({ children }) => {
         },
         hcps: updatedHcps,
         allHcps: updatedHcps,
-        zones: updatedZones.length > 0 ? updatedZones : prev.zones,
+        analogCandidates: data.analog_candidates || prev.analogCandidates || [],
         roi: {
           sample_investment: rawRoi.sample_investment ?? (Number(customSettings.total_samples) * Number(customSettings.sample_cost)),
           baseline_demand: rawRoi.predicted_baseline_demand ?? 0,
