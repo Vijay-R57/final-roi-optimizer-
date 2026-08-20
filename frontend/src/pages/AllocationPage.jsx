@@ -91,7 +91,7 @@ export const AllocationPage = () => {
 
         <KpiCard
           title="Expected ROI"
-          value={`+${projectedRoi.toFixed(1)}%`}
+          value={`${projectedRoi >= 0 ? '+' : ''}${projectedRoi.toFixed(1)}%`}
           description="Net Margin"
           trend={projectedRoi > 0 ? 34.8 : -10}
           trendLabel="Promotional Value"

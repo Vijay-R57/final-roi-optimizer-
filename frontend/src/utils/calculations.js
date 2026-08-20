@@ -47,6 +47,9 @@ export const calculateLiveRoi = ({
     breakevenIncrementalRx,
     breakevenSampleLift,
     breakevenSamples,
+    unitsPerPrescription,
+    variableCostPerUnit,
+    medicinePrice,
   }
 }
 

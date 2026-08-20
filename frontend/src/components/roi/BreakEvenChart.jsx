@@ -13,16 +13,23 @@ import { ShieldCheck, Target } from 'lucide-react'
 import { formatCurrency, formatNumber } from '../../utils/formatters'
 
 export const BreakEvenChart = ({ roiResults, currentPrice }) => {
-  const { sampleInvestment, breakevenIncrementalRx, expectedIncrementalRx } = roiResults
+  const { 
+    sampleInvestment = 0, 
+    breakevenIncrementalRx = 0, 
+    expectedIncrementalRx = 0,
+    unitsPerPrescription = 2,
+    variableCostPerUnit = 200,
+    projectedRoiPercent = 0,
+  } = roiResults
 
   // Generate 7 data points around the break-even and current operating point
   const maxRx = Math.max(30, expectedIncrementalRx * 1.5)
-  const step = maxRx / 6
+  const step = maxRx > 0 ? maxRx / 6 : 5
 
   const chartData = []
   for (let rx = 0; rx <= maxRx; rx += step) {
-    const revenue = rx * 2 * currentPrice
-    const cost = sampleInvestment + (rx * 2 * 45) // investment + variable cost
+    const revenue = rx * unitsPerPrescription * currentPrice
+    const cost = sampleInvestment + (rx * unitsPerPrescription * variableCostPerUnit)
     const profit = revenue - cost
     chartData.push({
       rx: Math.round(rx * 10) / 10,
@@ -32,9 +39,10 @@ export const BreakEvenChart = ({ roiResults, currentPrice }) => {
     })
   }
 
-  const marginAboveBreakEven = breakevenIncrementalRx > 0
+  const isAboveBreakEven = breakevenIncrementalRx > 0 && expectedIncrementalRx >= breakevenIncrementalRx && projectedRoiPercent >= 0
+  const marginAboveBreakEven = (breakevenIncrementalRx > 0 && expectedIncrementalRx > 0)
     ? Math.round(((expectedIncrementalRx - breakevenIncrementalRx) / breakevenIncrementalRx) * 100)
-    : 440
+    : 0
 
   return (
     <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-card space-y-4">
@@ -48,10 +56,17 @@ export const BreakEvenChart = ({ roiResults, currentPrice }) => {
           </p>
         </div>
 
-        <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold self-start">
-          <ShieldCheck className="w-4 h-4 text-emerald-600" />
-          <span>{marginAboveBreakEven}% Above Break-Even</span>
-        </div>
+        {isAboveBreakEven ? (
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-emerald-50 text-emerald-800 border border-emerald-200 rounded-full text-xs font-bold self-start">
+            <ShieldCheck className="w-4 h-4 text-emerald-600" />
+            <span>+{marginAboveBreakEven}% Above Break-Even</span>
+          </div>
+        ) : (
+          <div className="flex items-center gap-1.5 px-3 py-1 bg-rose-50 text-rose-800 border border-rose-200 rounded-full text-xs font-bold self-start">
+            <ShieldCheck className="w-4 h-4 text-rose-600" />
+            <span>Below Break-Even ({projectedRoiPercent ? projectedRoiPercent.toFixed(1) : '-100.0'}% ROI)</span>
+          </div>
+        )}
       </div>
 
       <div className="h-64 w-full pt-2">

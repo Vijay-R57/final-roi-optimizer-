@@ -1,0 +1,101 @@
+hcp_id,specialty,locality,zone,Expected_3M_Demand,Potential_Score,Potential_Category,Samples
+NPIIN0000008740,Diabetology,Velachery,South Chennai,3.4382149453587587,100.0,Very High,440
+NPIIN0000004535,Diabetology,Madhavaram,North Chennai,3.356137578980879,90.8,Very High,400
+NPIIN0000000688,Diabetology,Sholinganallur,South Chennai,3.1360965379901447,88.7,Very High,391
+NPIIN0000001415,Endocrinology,Nungambakkam,Central Chennai,3.2096462314788266,87.0,Very High,383
+NPIIN0000003326,Diabetology,Guindy,South Chennai,2.816446035524944,83.7,Very High,369
+NPIIN0000009393,Endocrinology,Tondiarpet,North Chennai,2.6530600353067517,81.7,Very High,360
+NPIIN0000002529,Endocrinology,Porur,South Chennai,2.491799800164959,77.6,High,342
+NPIIN0000006649,Endocrinology,Guindy,South Chennai,2.457984402594368,76.6,High,338
+NPIIN0000006597,Endocrinology,T Nagar,Central Chennai,2.4340731282297448,75.8,High,334
+NPIIN0000002838,Diabetology,Nungambakkam,Central Chennai,2.405582362667096,75.2,High,331
+NPIIN0000011198,Endocrinology,T Nagar,Central Chennai,2.435333885950882,75.1,High,331
+NPIIN0000007868,Endocrinology,Mylapore,Central Chennai,2.3828999514889713,74.7,High,329
+NPIIN0000003733,Endocrinology,Perambur,North Chennai,2.312216166756308,72.2,High,318
+NPIIN0000007531,Diabetology,Egmore,Central Chennai,2.302459723425476,72.0,High,317
+NPIIN0000001855,Endocrinology,Porur,South Chennai,2.2697878617672793,71.4,High,315
+NPIIN0000000537,Diabetology,Tondiarpet,North Chennai,2.296727534418291,70.5,High,311
+NPIIN0000011472,Diabetology,Mylapore,Central Chennai,2.277583064013697,69.9,High,308
+NPIIN0000000883,Diabetology,Sholinganallur,South Chennai,2.2583718886073827,69.6,High,307
+NPIIN0000000307,Diabetology,Ambattur,North Chennai,2.223423905577068,69.6,High,306
+NPIIN0000003259,Endocrinology,Tondiarpet,North Chennai,2.1271274449905153,67.3,High,297
+NPIIN0000005407,Diabetology,Ambattur,North Chennai,2.201841807838279,67.2,High,296
+NPIIN0000006948,Endocrinology,Adyar,South Chennai,2.103207261595205,65.8,High,290
+NPIIN0000005138,Endocrinology,Mylapore,Central Chennai,2.0357751213897957,63.8,High,281
+NPIIN0000001074,Diabetology,Guindy,South Chennai,2.0099183786710864,63.7,High,281
+NPIIN0000006156,Diabetology,Anna Nagar,Central Chennai,2.047438117575415,63.1,High,278
+NPIIN0000000530,Endocrinology,Egmore,Central Chennai,2.018872501088503,62.9,High,277
+NPIIN0000000163,Endocrinology,Egmore,Central Chennai,1.9979191729674375,62.8,High,277
+NPIIN0000011098,Diabetology,Adyar,South Chennai,2.060239577581198,62.4,High,275
+NPIIN0000001357,Endocrinology,Washermenpet,North Chennai,1.9539893592879765,62.1,High,274
+NPIIN0000008759,Diabetology,Perambur,North Chennai,1.9295648935028265,62.1,High,274
+NPIIN0000010516,Endocrinology,Kilpauk,Central Chennai,1.9430636419147265,62.1,High,273
+NPIIN0000000512,Endocrinology,Guindy,South Chennai,1.9182764689998792,61.6,High,271
+NPIIN0000009496,Endocrinology,Nungambakkam,Central Chennai,1.9038692140780034,61.4,High,270
+NPIIN0000006773,Endocrinology,Royapuram,North Chennai,1.9611302339607826,61.0,High,269
+NPIIN0000011017,Endocrinology,Ambattur,North Chennai,2.235143922255582,60.5,High,267
+NPIIN0000010708,Diabetology,Royapuram,North Chennai,1.860459003099065,60.4,High,266
+NPIIN0000010447,Diabetology,Tambaram,South Chennai,1.972641212652949,60.1,High,265
+NPIIN0000000768,Diabetology,Nungambakkam,Central Chennai,1.872704543230775,60.1,High,265
+NPIIN0000004104,General Medicine,Nungambakkam,Central Chennai,1.9815863878335809,59.8,Medium,263
+NPIIN0000000838,Diabetology,Guindy,South Chennai,1.8819658485925714,59.7,Medium,263
+NPIIN0000005703,Endocrinology,Kilpauk,Central Chennai,1.8624961552621078,59.6,Medium,263
+NPIIN0000010703,Endocrinology,Anna Nagar,Central Chennai,1.9114838521575002,59.5,Medium,262
+NPIIN0000011874,Endocrinology,Anna Nagar,Central Chennai,1.8906278930586171,58.0,Medium,255
+NPIIN0000002469,Diabetology,Perambur,North Chennai,1.8203962095886073,57.9,Medium,255
+NPIIN0000004149,Diabetology,Ambattur,North Chennai,1.8823461810661246,57.8,Medium,255
+NPIIN0000011704,Diabetology,Ambattur,North Chennai,2.1176852304800695,57.3,Medium,252
+NPIIN0000008159,Diabetology,Egmore,Central Chennai,2.1185375614153337,57.3,Medium,252
+NPIIN0000011678,Endocrinology,Sholinganallur,South Chennai,1.768120953752751,57.0,Medium,251
+NPIIN0000010374,Diabetology,Nungambakkam,Central Chennai,1.7387578551902194,56.7,Medium,250
+NPIIN0000009656,Diabetology,Sholinganallur,South Chennai,1.7382395281232226,56.6,Medium,249
+NPIIN0000008084,Endocrinology,Royapuram,North Chennai,1.7656002242128988,55.8,Medium,246
+NPIIN0000001764,Diabetology,Egmore,Central Chennai,1.6800701323319218,55.6,Medium,245
+NPIIN0000006335,Diabetology,Porur,South Chennai,1.6576946843847937,54.5,Medium,240
+NPIIN0000001722,Endocrinology,Anna Nagar,Central Chennai,1.7004024698864253,54.4,Medium,240
+NPIIN0000000031,Endocrinology,Adyar,South Chennai,1.6658361006087425,54.2,Medium,239
+NPIIN0000000649,Endocrinology,Sholinganallur,South Chennai,1.6268115287080092,54.1,Medium,238
+NPIIN0000007975,Endocrinology,Sholinganallur,South Chennai,1.6592973028210256,53.7,Medium,237
+NPIIN0000007589,Diabetology,Ambattur,North Chennai,1.6669691613403381,53.3,Medium,235
+NPIIN0000000951,General Medicine,Ambattur,North Chennai,1.964839839219409,53.1,Medium,234
+NPIIN0000011637,Diabetology,Sholinganallur,South Chennai,1.6379404130847623,53.1,Medium,234
+NPIIN0000000238,Diabetology,Porur,South Chennai,1.758049568338993,53.0,Medium,233
+NPIIN0000009980,Endocrinology,Kilpauk,Central Chennai,1.6135060747893297,52.9,Medium,233
+NPIIN0000001296,Diabetology,Madhavaram,North Chennai,1.6025514968607535,52.7,Medium,232
+NPIIN0000001469,Endocrinology,Guindy,South Chennai,1.6492684582931136,51.6,Medium,227
+NPIIN0000002660,Diabetology,Kilpauk,Central Chennai,1.6449700534505862,51.5,Medium,227
+NPIIN0000011679,Endocrinology,Madhavaram,North Chennai,1.5489405318268232,51.3,Medium,226
+NPIIN0000002803,Diabetology,T Nagar,Central Chennai,1.7020375658430984,51.2,Medium,226
+NPIIN0000000173,Diabetology,Mylapore,Central Chennai,1.5159866796948098,51.1,Medium,225
+NPIIN0000008587,Endocrinology,T Nagar,Central Chennai,1.5339774206297108,50.8,Medium,224
+NPIIN0000008455,Endocrinology,Anna Nagar,Central Chennai,1.6507741629441908,50.8,Medium,224
+NPIIN0000008263,Diabetology,Guindy,South Chennai,1.5898192775369548,50.7,Medium,224
+NPIIN0000002278,Endocrinology,Kilpauk,Central Chennai,1.6854259661428526,50.7,Medium,223
+NPIIN0000003160,Endocrinology,Egmore,Central Chennai,1.8667166621099687,50.5,Medium,222
+NPIIN0000008798,Endocrinology,Tondiarpet,North Chennai,1.6532148783798908,50.4,Medium,222
+NPIIN0000002865,Endocrinology,Madhavaram,North Chennai,1.5166761850614066,50.4,Medium,222
+NPIIN0000006461,Diabetology,Mylapore,Central Chennai,1.8577354114046538,50.3,Medium,222
+NPIIN0000006372,Endocrinology,Egmore,Central Chennai,1.6860044505204195,49.8,Medium,220
+NPIIN0000000792,Endocrinology,Tondiarpet,North Chennai,1.581789019790452,49.8,Medium,219
+NPIIN0000005349,Endocrinology,Adyar,South Chennai,1.583906823937139,49.5,Medium,218
+NPIIN0000005766,Diabetology,Madhavaram,North Chennai,1.4655516730202756,49.5,Medium,218
+NPIIN0000001702,Diabetology,Sholinganallur,South Chennai,1.5052054743758254,49.5,Medium,218
+NPIIN0000000091,General Medicine,Egmore,Central Chennai,1.7716291471892094,49.4,Medium,218
+NPIIN0000007051,General Medicine,Sholinganallur,South Chennai,1.4846453591952176,49.2,Medium,217
+NPIIN0000001938,Diabetology,Madhavaram,North Chennai,1.4966627242221089,49.0,Medium,216
+NPIIN0000010733,Endocrinology,Guindy,South Chennai,1.5304574888351927,49.0,Medium,216
+NPIIN0000005853,Endocrinology,Nungambakkam,Central Chennai,1.5618931831842149,48.9,Medium,216
+NPIIN0000002033,Endocrinology,Mylapore,Central Chennai,1.5148524969420254,48.9,Medium,215
+NPIIN0000006087,Endocrinology,Royapuram,North Chennai,1.5431315837848578,48.6,Medium,214
+NPIIN0000005435,Diabetology,Adyar,South Chennai,1.4534620128089948,48.5,Medium,214
+NPIIN0000004763,Diabetology,Guindy,South Chennai,1.4317034476887804,48.5,Medium,214
+NPIIN0000005038,Endocrinology,Egmore,Central Chennai,1.4294052874762715,48.5,Medium,213
+NPIIN0000006926,Endocrinology,T Nagar,Central Chennai,1.483759767592012,48.4,Medium,213
+NPIIN0000006778,Diabetology,Royapuram,North Chennai,1.5298233487253707,48.3,Medium,213
+NPIIN0000003416,Endocrinology,T Nagar,Central Chennai,1.441250292078905,48.3,Medium,213
+NPIIN0000004435,Endocrinology,Ambattur,North Chennai,1.405551599814888,48.1,Medium,212
+NPIIN0000000772,Diabetology,Ambattur,North Chennai,1.5376420028654765,48.1,Medium,212
+NPIIN0000003986,Endocrinology,Nungambakkam,Central Chennai,1.4711824776975766,48.1,Medium,212
+NPIIN0000010514,Dermatology,Perambur,North Chennai,1.4692858347897972,48.0,Medium,212
+NPIIN0000005727,Endocrinology,Tambaram,South Chennai,1.4378775699865078,48.0,Medium,211
+NPIIN0000002077,Diabetology,Porur,South Chennai,1.393729579207835,47.7,Medium,210

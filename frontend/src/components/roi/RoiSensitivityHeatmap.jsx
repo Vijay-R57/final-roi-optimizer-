@@ -54,14 +54,16 @@ export const RoiSensitivityHeatmap = ({ sensitivityData }) => {
                   {row.liftPercent}
                 </td>
                 {prices.map((p) => {
-                  const val = row[`price_${p}`] !== undefined ? row[`price_${p}`] : (row[`Price_${p}`] || 0)
+                  const rawVal = row[`price_${p}`] !== undefined ? row[`price_${p}`] : (row[`Price_${p}`] !== undefined ? row[`Price_${p}`] : 0)
+                  const val = Number(rawVal || 0)
+                  const formattedVal = `${val >= 0 ? '+' : ''}${val.toFixed(1)}%`
                   return (
                     <td key={p} className="py-2.5 px-3">
                       <div
-                        title={`Lift: ${row.liftPercent} | Price: ₹${p} | ROI: +${val}%`}
+                        title={`Lift: ${row.liftPercent || row.Sample_Lift} | Price: ₹${p} | ROI: ${formattedVal}`}
                         className={`py-1.5 px-2 rounded-lg text-xs transition-all hover:scale-105 cursor-pointer ${getCellBg(val)}`}
                       >
-                        +{val.toFixed(1)}%
+                        {formattedVal}
                       </div>
                     </td>
                   )

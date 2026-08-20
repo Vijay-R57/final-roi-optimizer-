@@ -52,7 +52,7 @@ export const ExecutiveInsight = () => {
             <span>High Return Resilience</span>
           </div>
           <p className="text-slate-300 leading-relaxed">
-            With a baseline demand of {formatNumber(roi.baseline_demand || 213.07, 1)} units and drug price of {formatCurrency(campaignData.target.medicine_price)}, the campaign achieves an exceptional projected ROI of {roi.projected_roi_percent ? `+${roi.projected_roi_percent.toFixed(1)}%` : '+444.5%'} at the target 10% lift assumption.
+            With a baseline demand of {formatNumber(roi.baseline_demand || 213.07, 1)} units and drug price of {formatCurrency(campaignData.target.medicine_price)}, the campaign achieves a projected ROI of {roi.projected_roi_percent !== undefined ? `${roi.projected_roi_percent >= 0 ? '+' : ''}${roi.projected_roi_percent.toFixed(1)}%` : '+444.5%'} at the target 10% lift assumption.
           </p>
         </div>
 
