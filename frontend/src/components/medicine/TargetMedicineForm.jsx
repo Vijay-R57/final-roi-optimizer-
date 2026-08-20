@@ -207,10 +207,14 @@ export const TargetMedicineForm = ({ medicine, onChange }) => {
             </span>
             <input
               type="number"
-              min="1"
-              step="0.5"
-              value={medicine.medicine_price}
-              onChange={(e) => onChange({ ...medicine, medicine_price: parseFloat(e.target.value) || 0 })}
+              step="any"
+              min="0"
+              value={medicine.medicine_price ?? ''}
+              onChange={(e) => {
+                const val = e.target.value
+                onChange({ ...medicine, medicine_price: val === '' ? '' : (parseFloat(val) || 0) })
+              }}
+              placeholder="e.g. 95.00"
               className="w-full pl-8 pr-3.5 py-2.5 text-sm bg-slate-50/50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900 font-semibold"
             />
           </div>

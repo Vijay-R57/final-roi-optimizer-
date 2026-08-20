@@ -89,10 +89,13 @@ export const CampaignConfigForm = ({ settings, onChange }) => {
               </span>
               <input
                 type="number"
-                step="0.001"
-                min="0.001"
-                value={settings.sample_cost}
-                onChange={(e) => onChange({ ...settings, sample_cost: parseFloat(e.target.value) || 0.01 })}
+                step="any"
+                min="0"
+                value={settings.sample_cost ?? ''}
+                onChange={(e) => {
+                  const val = e.target.value
+                  onChange({ ...settings, sample_cost: val === '' ? '' : (parseFloat(val) || 0) })
+                }}
                 className="w-full pl-7 pr-3 py-2 text-sm bg-slate-50/50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-900 font-semibold"
               />
             </div>
@@ -108,11 +111,14 @@ export const CampaignConfigForm = ({ settings, onChange }) => {
             </label>
             <input
               type="number"
-              step="1"
+              step="any"
               min="1"
-              max="10"
-              value={settings.average_units_per_prescription}
-              onChange={(e) => onChange({ ...settings, average_units_per_prescription: parseInt(e.target.value) || 1 })}
+              max="20"
+              value={settings.average_units_per_prescription ?? ''}
+              onChange={(e) => {
+                const val = e.target.value
+                onChange({ ...settings, average_units_per_prescription: val === '' ? '' : (parseInt(val, 10) || 0) })
+              }}
               className="w-full px-3 py-2 text-sm bg-slate-50/50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-900 font-semibold"
             />
             <p className="text-[11px] text-slate-400 mt-1">
@@ -131,10 +137,13 @@ export const CampaignConfigForm = ({ settings, onChange }) => {
               </span>
               <input
                 type="number"
-                step="1"
+                step="any"
                 min="0"
-                value={settings.variable_cost_per_unit}
-                onChange={(e) => onChange({ ...settings, variable_cost_per_unit: parseFloat(e.target.value) || 0 })}
+                value={settings.variable_cost_per_unit ?? ''}
+                onChange={(e) => {
+                  const val = e.target.value
+                  onChange({ ...settings, variable_cost_per_unit: val === '' ? '' : (parseFloat(val) || 0) })
+                }}
                 className="w-full pl-7 pr-3 py-2 text-sm bg-slate-50/50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 text-slate-900 font-semibold"
               />
             </div>
