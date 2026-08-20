@@ -12,7 +12,7 @@ def ensure_frontend_build():
     if not FRONTEND_DIST.exists() or not (FRONTEND_DIST / "index.html").exists():
         print("[Start] Building frontend production bundle (npm run build)...")
         frontend_dir = BASE_DIR / "frontend"
-        res = subprocess.run("npm run build", shell=True, cwd=str(frontend_dir))
+        res = subprocess.run("node ./node_modules/vite/bin/vite.js build", shell=True, cwd=str(frontend_dir))
         if res.returncode != 0:
             print("[Start] ERROR: Frontend build failed!")
             sys.exit(1)
