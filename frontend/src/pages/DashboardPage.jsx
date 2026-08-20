@@ -16,6 +16,7 @@ import { HeroBanner } from '../components/dashboard/HeroBanner'
 import { PipelineFlow } from '../components/dashboard/PipelineFlow'
 import { ExecutiveInsight } from '../components/dashboard/ExecutiveInsight'
 import { KpiCard } from '../components/common/KpiCard'
+import { TerminalLogViewer } from '../components/common/TerminalLogViewer'
 import { formatCurrency, formatNumber } from '../utils/formatters'
 
 export const DashboardPage = () => {
@@ -204,6 +205,14 @@ export const DashboardPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Live Terminal Log Viewer */}
+      <TerminalLogViewer
+        stdoutLogs={campaignData.stdoutLogs}
+        stderrLogs={campaignData.stderrLogs}
+        executionId={campaignData.executionId}
+        duration={campaignData.executionDuration}
+      />
     </div>
   )
 }

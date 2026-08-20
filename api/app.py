@@ -1,8 +1,5 @@
-"""
-Flask API for Sample Drop Optimization.
-Runs the ML pipeline on demand and exposes results via REST endpoints.
-"""
-import json, os, sys
+import json, os, sys, subprocess, re, time
+from datetime import datetime
 from pathlib import Path
 
 # Ensure project root is on path
@@ -14,6 +11,7 @@ from flask_cors import CORS
 from src.services.sample_drop_service import SampleDropService
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
+BASE_DIR = PROJECT_ROOT
 OUTPUT_DIR = PROJECT_ROOT / "outputs"
 FRONTEND_DIST = PROJECT_ROOT / "frontend" / "dist"
 
@@ -242,19 +240,26 @@ def _get_default_result(req):
         "validation": _load_json("validation_report.json") or {},
     }
 
-# ── Full prediction pipeline (100% User Input Driven) ─────────────────────────
+_last_run_dir = None
+
+# ── Full prediction pipeline (Real Subprocess Execution) ──────────────────────
+@app.route("/api/pipeline/run", methods=["POST"])
 @app.route("/api/predict", methods=["POST"])
-def predict():
-    global _last_result
+def pipeline_run():
+    global _last_result, _last_run_dir
     data = request.get_json() or {}
 
-    generic_name      = data.get("generic_name", "").strip()
-    brand_name        = data.get("brand_name", "").strip()
-    therapeutic_class = data.get("therapeutic_class", "").strip()
-    dosage_form       = data.get("dosage_form", "").strip()
-    strength          = data.get("strength", "").strip()
+    generic_name      = str(data.get("generic_name", "")).strip()
+    brand_name        = str(data.get("brand_name", "")).strip()
+    therapeutic_class = str(data.get("therapeutic_class", "")).strip()
+    dosage_form       = str(data.get("dosage_form", "")).strip()
+    strength          = str(data.get("strength", "")).strip()
     medicine_price    = data.get("medicine_price")
     total_samples     = data.get("total_samples")
+    sample_cost       = data.get("sample_cost", 5.0)
+    sample_lift       = data.get("sample_lift", 0.11)
+    units_per_rx      = data.get("units_per_rx", 2)
+    variable_cost     = data.get("variable_cost", 200.0)
 
     missing = []
     if not generic_name:      missing.append("generic_name")
@@ -267,57 +272,123 @@ def predict():
 
     if missing:
         return jsonify({
-            "error": f"Missing or invalid required campaign input parameter(s): {', '.join(missing)}"
+            "status": "error",
+            "message": f"Missing or invalid required campaign input parameter(s): {', '.join(missing)}"
         }), 400
 
-    req = {
-        "medicine": {
-            "generic_name":      generic_name,
-            "brand_name":        brand_name,
-            "therapeutic_class": therapeutic_class,
-            "dosage_form":       dosage_form,
-            "strength":          strength,
-            "unit_price":        float(medicine_price),
-        },
-        "total_samples":                  int(total_samples),
-        "medicine_price":                 float(medicine_price),
-        "sample_cost":                    float(data.get("sample_cost", 5.0)),
-        "expected_sample_lift":           float(data.get("sample_lift", 0.11)),
-        "average_units_per_prescription": float(data.get("units_per_rx", 2)),
-        "variable_cost_per_unit":         float(data.get("variable_cost", 200.0)),
-        "mode": "new_analog",
-    }
+    # 1. Execution ID & Output Directory Isolation
+    slug = re.sub(r'[^a-z0-9]', '', generic_name.lower()) or "target"
+    timestamp_str = datetime.now().strftime("%Y%m%d-%H%M%S")
+    execution_id = f"{timestamp_str}-{slug}"
 
-    cache_key = (
-        req["medicine"]["generic_name"].lower().strip(),
-        req["medicine"]["brand_name"].lower().strip(),
-        req["medicine"]["therapeutic_class"].lower().strip(),
-        req["medicine"]["dosage_form"].lower().strip(),
-        req["medicine"]["strength"].lower().strip(),
-        req["total_samples"],
-        req["medicine_price"],
-        req["sample_cost"],
-        req["expected_sample_lift"],
-        req["average_units_per_prescription"],
-        req["variable_cost_per_unit"]
-    )
+    run_dir = OUTPUT_DIR / "runs" / execution_id
+    os.makedirs(str(run_dir), exist_ok=True)
 
-    if cache_key in _run_cache:
-        print(f"[Flask] Returning cached dynamic pipeline result for {cache_key}")
-        _last_result = _run_cache[cache_key]
-        return jsonify(_run_cache[cache_key])
+    # 2. Construct CLI Command to invoke real run.py
+    py_exe = sys.executable
+    cmd = [
+        py_exe,
+        str(BASE_DIR / "run.py"),
+        "--medicine-name", generic_name,
+        "--brand-name", brand_name,
+        "--therapeutic-class", therapeutic_class,
+        "--dosage-form", dosage_form,
+        "--strength", strength,
+        "--medicine-price", str(medicine_price),
+        "--total-samples", str(total_samples),
+        "--sample-cost", str(sample_cost),
+        "--sample-lift", str(sample_lift),
+        "--units-per-rx", str(units_per_rx),
+        "--variable-cost", str(variable_cost),
+        "--output-dir", str(run_dir),
+    ]
+
+    print(f"[Flask] Spawning real subprocess run.py for execution {execution_id}: {' '.join(cmd)}")
+    t0 = time.time()
 
     try:
-        print(f"[Flask] Executing dynamic ML pipeline for target: {req['medicine']['generic_name']} ({req['medicine']['brand_name']})")
+        proc = subprocess.run(
+            cmd,
+            cwd=str(BASE_DIR),
+            capture_output=True,
+            text=True,
+            timeout=300
+        )
+    except subprocess.TimeoutExpired as te:
+        err_msg = f"Pipeline execution timed out after 300 seconds for {execution_id}."
+        print(f"[Flask] {err_msg}")
+        return jsonify({
+            "status": "error",
+            "message": err_msg,
+            "exit_code": 124,
+            "stdout": te.stdout or "",
+            "stderr": te.stderr or "Process timeout expired.",
+            "execution_id": execution_id
+        }), 500
+    except Exception as ex:
+        err_msg = f"Failed to launch subprocess run.py: {str(ex)}"
+        print(f"[Flask] {err_msg}")
+        return jsonify({
+            "status": "error",
+            "message": err_msg,
+            "exit_code": 1,
+            "stdout": "",
+            "stderr": str(ex),
+            "execution_id": execution_id
+        }), 500
+
+    duration = round(time.time() - t0, 2)
+
+    # Save log files
+    try:
+        with open(str(run_dir / "stdout.log"), "w", encoding="utf-8") as f_out:
+            f_out.write(proc.stdout or "")
+        with open(str(run_dir / "stderr.log"), "w", encoding="utf-8") as f_err:
+            f_err.write(proc.stderr or "")
+    except Exception as _fe:
+        print(f"[Flask] Warn saving log files: {_fe}")
+
+    # 3. Handle Exit Code Errors (NO SILENT FALLBACK TO MOCK DATA)
+    if proc.returncode != 0:
+        print(f"[Flask] Subprocess run.py failed with exit code {proc.returncode} for execution {execution_id}")
+        return jsonify({
+            "status": "error",
+            "message": f"ML Pipeline execution failed in run.py (exit code {proc.returncode}).",
+            "exit_code": proc.returncode,
+            "stdout": proc.stdout,
+            "stderr": proc.stderr,
+            "execution_id": execution_id,
+            "duration_seconds": duration
+        }), 500
+
+    # 4. Parse & Return Real Result
+    result_file = run_dir / "pipeline_result.json"
+    res_data = {}
+    if result_file.exists():
+        with open(str(result_file), "r", encoding="utf-8") as f_res:
+            res_data = json.load(f_res)
+    else:
         svc = _get_svc()
-        res = svc.run(req)
-        res_sanitized = _sanitize_json(res)
-        _last_result = res_sanitized
-        _run_cache[cache_key] = res_sanitized
-        return jsonify(res_sanitized)
-    except Exception as e:
-        print(f"[Flask] Error during dynamic execution: {e}")
-        return jsonify({"error": f"Pipeline execution error: {str(e)}"}), 500
+        req_dict = {
+            "medicine": {"generic_name": generic_name, "brand_name": brand_name, "therapeutic_class": therapeutic_class, "dosage_form": dosage_form, "strength": strength},
+            "total_samples": int(total_samples), "medicine_price": float(medicine_price), "sample_cost": float(sample_cost),
+            "expected_sample_lift": float(sample_lift), "average_units_per_prescription": float(units_per_rx), "variable_cost_per_unit": float(variable_cost), "mode": "new_analog"
+        }
+        res_data = svc.run(req_dict, output_dir=run_dir)
+
+    res_data = _sanitize_json(res_data)
+    res_data["status"] = "success"
+    res_data["execution_id"] = execution_id
+    res_data["stdout_logs"] = proc.stdout
+    res_data["stderr_logs"] = proc.stderr
+    res_data["execution_duration"] = duration
+    res_data["run_dir"] = str(run_dir)
+
+    _last_result = res_data
+    _last_run_dir = run_dir
+
+    print(f"[Flask] Pipeline execution {execution_id} completed successfully in {duration}s!")
+    return jsonify(res_data)
 
 
 # ── Top 100 HCPs ───────────────────────────────────────────────────────────────

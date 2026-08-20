@@ -14,8 +14,8 @@ export const sampleDropApi = {
   // Historical analog similarity search
   searchAnalog: (medicinePayload) => apiClient.post('/analog/search', medicinePayload),
   
-  // Full Machine Learning & Optimization execution
-  runOptimization: (campaignPayload) => apiClient.post('/predict', campaignPayload),
+  // Full Machine Learning & Optimization execution (real run.py process)
+  runOptimization: (campaignPayload) => apiClient.post('/pipeline/run', campaignPayload),
   
   // Top 100 HCP rankings & Full 12,000 Universe
   getTop100Hcps: () => apiClient.get('/hcps/top100'),

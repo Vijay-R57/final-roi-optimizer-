@@ -60,20 +60,45 @@ export const ErrorBanner = () => {
         </div>
       </div>
 
-      {error.technical && (
+      {(error.technical || error.stderr || error.stdout) && (
         <div className="mt-3.5 pt-3 border-t border-rose-200">
           <button
             type="button"
             onClick={() => setShowDetails(!showDetails)}
             className="text-[11px] font-semibold text-rose-700 hover:text-rose-900 inline-flex items-center gap-1"
           >
-            <span>Show technical details</span>
+            <span>{showDetails ? 'Hide technical logs' : `Show technical details ${error.exitCode ? `(Exit Code ${error.exitCode})` : ''}`}</span>
             {showDetails ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
           </button>
           {showDetails && (
-            <pre className="mt-2 p-3 bg-rose-950 text-rose-100 rounded-xl text-[11px] font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
-              {error.technical}
-            </pre>
+            <div className="mt-2 space-y-2">
+              {error.exitCode !== undefined && (
+                <div className="text-xs font-mono text-rose-900 font-bold">
+                  Process Exit Code: {error.exitCode} {error.executionId ? `| Run ID: ${error.executionId}` : ''}
+                </div>
+              )}
+              {error.stderr && (
+                <div>
+                  <div className="text-[10px] uppercase font-bold text-rose-800 mb-1">Python stderr Traceback:</div>
+                  <pre className="p-3 bg-slate-950 text-rose-400 rounded-xl text-[11px] font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner max-h-60 overflow-y-auto">
+                    {error.stderr}
+                  </pre>
+                </div>
+              )}
+              {error.stdout && (
+                <div>
+                  <div className="text-[10px] uppercase font-bold text-slate-700 mb-1">Python stdout Log:</div>
+                  <pre className="p-3 bg-slate-950 text-emerald-400 rounded-xl text-[11px] font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner max-h-60 overflow-y-auto">
+                    {error.stdout}
+                  </pre>
+                </div>
+              )}
+              {error.technical && !error.stderr && (
+                <pre className="p-3 bg-rose-950 text-rose-100 rounded-xl text-[11px] font-mono overflow-x-auto whitespace-pre-wrap leading-relaxed shadow-inner">
+                  {error.technical}
+                </pre>
+              )}
+            </div>
           )}
         </div>
       )}

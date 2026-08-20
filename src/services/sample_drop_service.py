@@ -128,10 +128,12 @@ class SampleDropService:
         )
 
     # =========================================================================
-    def run(self, req):
+    def run(self, req, output_dir=None):
         target = req["medicine"]
         mode   = req.get("mode","new_analog")
         MAX_CAP = req.get("max_samples_per_hcp", MAX_SAMPLES_PER_HCP)
+        out_dir = str(output_dir) if output_dir else str(OUTPUT_DIR)
+        os.makedirs(out_dir, exist_ok=True)
 
         # ── 1. Dataset stats ──────────────────────────────────────────────
         n_events  = len(self.events)
@@ -1046,10 +1048,10 @@ class SampleDropService:
                                     req.get("sample_cost",0),
                                     req.get("average_units_per_prescription",1),
                                     req.get("variable_cost_per_unit",0))
-        sens_df.to_csv(str(OUTPUT_DIR/"roi_sensitivity.csv"),index=False)
+        sens_df.to_csv(os.path.join(out_dir, "roi_sensitivity.csv"), index=False)
 
         # ── 32. Save all output files ─────────────────────────────────────
-        out=str(OUTPUT_DIR)
+        out = out_dir
         latest[[C_HCP_ID,C_SPEC,C_LOCALITY,C_ZONE,"Expected_3M_Demand",
                 "Potential_Score","Potential_Category","Samples"]]\
             .to_csv(f"{out}/sample_allocation.csv",index=False)
@@ -1225,3 +1227,10 @@ class SampleDropService:
             "validation_report":vr,"top_hcp_explanations":exp_rows,
             "diagnostic_table":diag_sample.to_dict("records"),
         }
+        try:
+            with open(os.path.join(out_dir, "pipeline_result.json"), "w") as f_out:
+                json.dump(res, f_out, indent=2, default=str)
+        except Exception as _je:
+            print(f"[WARN] Failed to write pipeline_result.json: {_je}")
+
+        return res

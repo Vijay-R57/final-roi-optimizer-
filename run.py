@@ -22,6 +22,7 @@ def main():
     p.add_argument("--units-per-rx",        type=int,   default=2,     help="Average units per prescription")
     p.add_argument("--variable-cost",       type=float, default=200.0, help="Commercial variable cost per unit in INR")
     p.add_argument("--mode",                default="new_analog", choices=["new_analog","existing"])
+    p.add_argument("--output-dir",          default="outputs", help="Directory to save pipeline outputs")
     a = p.parse_args()
     req = {
         "medicine": {
@@ -42,7 +43,7 @@ def main():
     }
     svc = SampleDropService()
     try:
-        r = svc.run(req)
+        r = svc.run(req, output_dir=a.output_dir)
     except AssertionError as e:
         print(f"\n[CRITICAL] {e}"); sys.exit(1)
     except Exception as e:

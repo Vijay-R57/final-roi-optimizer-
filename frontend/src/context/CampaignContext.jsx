@@ -164,6 +164,12 @@ export const CampaignProvider = ({ children }) => {
       const res = await sampleDropApi.runOptimization(payload)
       const data = res.data
 
+      if (!data || data.status === 'error') {
+        const errObj = new Error(data?.message || 'Pipeline execution failed in backend.')
+        errObj.response = { data }
+        throw errObj
+      }
+
       const rawTop100 = data.prescriber_distribution || data.top_100_hcps || []
       const rawZones = data.zone_distribution || []
       const rawRoi = data.roi || {}
@@ -192,7 +198,7 @@ export const CampaignProvider = ({ children }) => {
         notes: 'Optimized allocation from CatBoost exclusive model.',
       })
 
-      const updatedHcps = rawTop100.length > 0 ? rawTop100.map(mapHcpItem) : DEFAULT_CAMPAIGN_DATA.hcps
+      const updatedHcps = rawTop100.map(mapHcpItem)
 
       const updatedZones = rawZones.map(z => ({
         zone: z.Zone || z.zone,
@@ -210,6 +216,10 @@ export const CampaignProvider = ({ children }) => {
         ...prev,
         target: customMedicine,
         settings: customSettings,
+        executionId: data.execution_id,
+        stdoutLogs: data.stdout_logs,
+        stderrLogs: data.stderr_logs,
+        executionDuration: data.execution_duration,
         analog: {
           generic_name: rawAnalog.generic_name || 'Analog Match',
           brand_name: rawAnalog.brand_name || '',
@@ -235,7 +245,7 @@ export const CampaignProvider = ({ children }) => {
         },
         hcps: updatedHcps,
         allHcps: updatedHcps,
-        analogCandidates: data.analog_candidates || prev.analogCandidates || [],
+        analogCandidates: data.analog_candidates || [],
         roi: {
           sample_investment: rawRoi.sample_investment ?? (Number(customSettings.total_samples) * Number(customSettings.sample_cost)),
           baseline_demand: rawRoi.predicted_baseline_demand ?? 0,
@@ -253,14 +263,19 @@ export const CampaignProvider = ({ children }) => {
 
       setIsDemoMode(false)
       setIsOptimized(true)
-      setOptimizationId(`OPT-${Date.now().toString().slice(-6)}`)
+      setOptimizationId(data.execution_id || `OPT-${Date.now().toString().slice(-6)}`)
       setLastUpdated('Updated just now')
     } catch (err) {
-      console.error('Optimization error:', err)
+      console.error('Optimization execution error:', err)
+      const resp = err.response?.data || {}
       setError({
-        message: err.message || 'Optimization service unavailable.',
-        technical: err.technicalDetails || String(err),
+        message: resp.message || err.message || 'Optimization execution failed.',
+        exitCode: resp.exit_code,
+        stderr: resp.stderr,
+        stdout: resp.stdout,
+        executionId: resp.execution_id,
       })
+      setIsOptimized(false)
     } finally {
       clearInterval(stageTimer)
       setLoading(false)
