@@ -214,22 +214,45 @@ def _get_default_result(req):
         "validation": _load_json("validation_report.json") or {},
     }
 
-# ── Full prediction pipeline (Dynamic Execution) ──────────────────────────────
+# ── Full prediction pipeline (100% User Input Driven) ─────────────────────────
 @app.route("/api/predict", methods=["POST"])
 def predict():
     global _last_result
     data = request.get_json() or {}
+
+    generic_name      = data.get("generic_name", "").strip()
+    brand_name        = data.get("brand_name", "").strip()
+    therapeutic_class = data.get("therapeutic_class", "").strip()
+    dosage_form       = data.get("dosage_form", "").strip()
+    strength          = data.get("strength", "").strip()
+    medicine_price    = data.get("medicine_price")
+    total_samples     = data.get("total_samples")
+
+    missing = []
+    if not generic_name:      missing.append("generic_name")
+    if not brand_name:        missing.append("brand_name")
+    if not therapeutic_class: missing.append("therapeutic_class")
+    if not dosage_form:       missing.append("dosage_form")
+    if not strength:          missing.append("strength")
+    if medicine_price is None or float(medicine_price) <= 0: missing.append("medicine_price (> 0)")
+    if total_samples is None or int(total_samples) <= 0:     missing.append("total_samples (> 0)")
+
+    if missing:
+        return jsonify({
+            "error": f"Missing or invalid required campaign input parameter(s): {', '.join(missing)}"
+        }), 400
+
     req = {
         "medicine": {
-            "generic_name":      data.get("generic_name", "Metformin"),
-            "brand_name":        data.get("brand_name", "Glycomet"),
-            "therapeutic_class": data.get("therapeutic_class", "Antidiabetic"),
-            "dosage_form":       data.get("dosage_form", "Tablet"),
-            "strength":          data.get("strength", "500 mg"),
-            "unit_price":        float(data.get("medicine_price", 95)),
+            "generic_name":      generic_name,
+            "brand_name":        brand_name,
+            "therapeutic_class": therapeutic_class,
+            "dosage_form":       dosage_form,
+            "strength":          strength,
+            "unit_price":        float(medicine_price),
         },
-        "total_samples":                  int(data.get("total_samples", 10000)),
-        "medicine_price":                 float(data.get("medicine_price", 95)),
+        "total_samples":                  int(total_samples),
+        "medicine_price":                 float(medicine_price),
         "sample_cost":                    float(data.get("sample_cost", 0.0587)),
         "expected_sample_lift":           float(data.get("sample_lift", 0.10)),
         "average_units_per_prescription": float(data.get("units_per_rx", 2)),
@@ -257,10 +280,8 @@ def predict():
         _run_cache[cache_key] = res
         return jsonify(res)
     except Exception as e:
-        print(f"[Flask] Error during dynamic execution: {e}. Falling back to default output.")
-        res_json = _get_default_result(req)
-        _run_cache[cache_key] = res_json
-        return jsonify(res_json)
+        print(f"[Flask] Error during dynamic execution: {e}")
+        return jsonify({"error": f"Pipeline execution error: {str(e)}"}), 500
 
 
 # ── Top 100 HCPs ───────────────────────────────────────────────────────────────

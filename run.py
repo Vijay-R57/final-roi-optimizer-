@@ -9,16 +9,15 @@ def _sec(t):     print(); _hr(); print(t.center(W)); _hr()
 def _sub(t):     print(f"\n  -- {t} --")
 
 def main():
-    p = argparse.ArgumentParser()
-    p.add_argument("--medicine-name",       default="Atorvastatin")
-    p.add_argument("--brand-name",          default="Newstat")
-    p.add_argument("--therapeutic-class",   default="Lipid Lowering")
-    p.add_argument("--dosage-form",         default="Tablet")
-    p.add_argument("--strength",            default="10 mg")
-    p.add_argument("--total-samples",       type=int,   default=10000)
-    p.add_argument("--medicine-price",      type=float, default=120.0)
-    p.add_argument("--mode",                default="new_analog",
-                   choices=["new_analog","existing"])
+    p = argparse.ArgumentParser(description="Sample Drop Optimization Pipeline — Driven 100% by User Input")
+    p.add_argument("--medicine-name",       required=True, help="Target medicine generic name (e.g. Metformin)")
+    p.add_argument("--brand-name",          required=True, help="Target medicine brand name (e.g. Glycomet)")
+    p.add_argument("--therapeutic-class",   required=True, help="Therapeutic class (e.g. Antidiabetic)")
+    p.add_argument("--dosage-form",         required=True, help="Dosage form (e.g. Tablet)")
+    p.add_argument("--strength",            required=True, help="Dosage strength (e.g. 500 mg)")
+    p.add_argument("--total-samples",       type=int,   required=True, help="Total sample unit volume budget")
+    p.add_argument("--medicine-price",      type=float, required=True, help="Unit pack price in INR")
+    p.add_argument("--mode",                default="new_analog", choices=["new_analog","existing"])
     a = p.parse_args()
     req = {
         "medicine": {

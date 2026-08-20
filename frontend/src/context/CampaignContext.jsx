@@ -134,6 +134,18 @@ export const CampaignProvider = ({ children }) => {
     }, 1200)
 
     try {
+      if (
+        !customMedicine.generic_name?.trim() ||
+        !customMedicine.brand_name?.trim() ||
+        !customMedicine.therapeutic_class?.trim() ||
+        !customMedicine.dosage_form?.trim() ||
+        !customMedicine.strength?.trim() ||
+        !customMedicine.medicine_price || Number(customMedicine.medicine_price) <= 0 ||
+        !customSettings.total_samples || Number(customSettings.total_samples) <= 0
+      ) {
+        throw new Error('Please fill out all required target medicine and campaign parameters before running optimization.')
+      }
+
       const payload = {
         generic_name: customMedicine.generic_name,
         brand_name: customMedicine.brand_name,

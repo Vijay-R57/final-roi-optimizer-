@@ -4,12 +4,12 @@
 
 export const DEFAULT_CAMPAIGN_DATA = {
   target: {
-    generic_name: "Atorvastatin",
-    brand_name: "Newstat",
-    therapeutic_class: "Lipid Lowering",
-    dosage_form: "Tablet",
-    strength: "10 mg",
-    medicine_price: 120.0,
+    generic_name: "",
+    brand_name: "",
+    therapeutic_class: "",
+    dosage_form: "",
+    strength: "",
+    medicine_price: "",
   },
   settings: {
     total_samples: 10000,

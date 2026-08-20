@@ -150,10 +150,11 @@ export const TargetMedicineForm = ({ medicine, onChange }) => {
             Therapeutic Class *
           </label>
           <select
-            value={medicine.therapeutic_class}
+            value={medicine.therapeutic_class || ''}
             onChange={(e) => onChange({ ...medicine, therapeutic_class: e.target.value })}
             className="w-full px-3.5 py-2.5 text-sm bg-slate-50/50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900 font-medium"
           >
+            <option value="">-- Select Therapeutic Class --</option>
             {THERAPEUTIC_CLASSES.map((tc) => (
               <option key={tc} value={tc}>
                 {tc}
@@ -168,10 +169,11 @@ export const TargetMedicineForm = ({ medicine, onChange }) => {
             Dosage Form *
           </label>
           <select
-            value={medicine.dosage_form}
+            value={medicine.dosage_form || ''}
             onChange={(e) => onChange({ ...medicine, dosage_form: e.target.value })}
             className="w-full px-3.5 py-2.5 text-sm bg-slate-50/50 border border-slate-200 rounded-xl focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all text-slate-900 font-medium"
           >
+            <option value="">-- Select Dosage Form --</option>
             {DOSAGE_FORMS.map((df) => (
               <option key={df} value={df}>
                 {df}
