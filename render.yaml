@@ -1,5 +1,11 @@
 services:
   - type: web
-    name: sample-drop-optimization
-    env: docker
-    dockerfilePath: ./Dockerfile
+    name: final-roi-optimizer
+    env: python
+    buildCommand: "pip install -r requirements.txt && cd frontend && npm install && npm run build && cd .."
+    startCommand: "python start.py"
+    envVars:
+      - key: PORT
+        value: 10000
+      - key: PYTHON_VERSION
+        value: 3.12.0
