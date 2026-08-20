@@ -1,3 +1,11 @@
 Rank,medicine_id,generic_name,brand_name,therapeutic_class,dosage_form,strength,Segment_Tier,Profile_Similarity,Behavior_Similarity,Data_Quality,Final_Analog_Score,Historical_Events,Active_HCPs,Historical_Months,Quality_Status
-1,MED016,Sitagliptin,Sitaglo,Antidiabetic,Tablet,100 mg,1,0.866,1.0,0.9,0.9046,8947,5052,33,OK
-2,MED015,Gliclazide,Glicla,Antidiabetic,Tablet,80 mg,1,0.8473,0.0,0.1,0.5234,7768,4654,33,OK
+1,MED009,Pravastatin,Prava,Lipid Lowering,Tablet,20 mg,2,0.5456,0.8,0.9,0.6624,10816,6100,33,OK
+2,MED008,Pravastatin,Prava,Lipid Lowering,Tablet,10 mg,2,0.5004,0.8216,0.7081,0.6119,8031,5122,33,OK
+3,MED001,Atorvastatin,Newstat,Lipid Lowering,Tablet,10 mg,2,0.5551,0.5608,0.7398,0.5842,8476,5261,33,OK
+4,MED007,Simvastatin,Simva,Lipid Lowering,Tablet,20 mg,2,0.5589,0.5515,0.6402,0.5692,7217,4783,33,OK
+5,MED006,Simvastatin,Simva,Lipid Lowering,Tablet,10 mg,2,0.4831,0.5386,0.6408,0.5206,7227,4784,33,OK
+6,MED002,Atorvastatin,Newstat,Lipid Lowering,Tablet,20 mg,2,0.4089,0.5878,0.6972,0.4969,7896,5066,33,OK
+7,MED003,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,5 mg,2,0.5329,0.2885,0.3844,0.4495,4751,3577,33,OK
+8,MED010,Ezetimibe,Ezetra,Lipid Lowering,Tablet,10 mg,2,0.3134,0.5633,0.662,0.4281,7490,4879,33,OK
+9,MED004,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,10 mg,2,0.5036,0.281,0.1,0.3874,2864,2426,33,OK
+10,MED005,Rosuvastatin,Rosuva,Lipid Lowering,Tablet,20 mg,2,0.2358,0.4103,0.6021,0.3344,6729,4639,33,OK

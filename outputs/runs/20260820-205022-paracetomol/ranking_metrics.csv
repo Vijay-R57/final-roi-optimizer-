@@ -1,0 +1,13 @@
+Pipeline,K,Precision,Recall,NDCG
+Direct_CatBoost,10,0.1,0.0002,0.0694
+Direct_CatBoost,25,0.12,0.0007,0.0996
+Direct_CatBoost,50,0.06,0.0007,0.0628
+Direct_CatBoost,100,0.06,0.0014,0.0621
+DirectLog_CatBoost,10,0.0,0.0,0.0
+DirectLog_CatBoost,25,0.0,0.0,0.0
+DirectLog_CatBoost,50,0.04,0.0005,0.0296
+DirectLog_CatBoost,100,0.02,0.0005,0.0183
+TwoStage_CatBoost,10,0.0,0.0,0.0
+TwoStage_CatBoost,25,0.0,0.0,0.0
+TwoStage_CatBoost,50,0.0,0.0,0.0
+TwoStage_CatBoost,100,0.02,0.0005,0.0148

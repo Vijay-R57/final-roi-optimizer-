@@ -32,7 +32,8 @@ apiClient.interceptors.response.use(
       friendlyMessage = `Unable to reach the API server (${apiBase}). Please check backend status.`
     }
 
-    const enhancedError = new Error(friendlyMessage)
+    const enhancedError = new Error(error.response?.data?.message || friendlyMessage)
+    enhancedError.response = error.response
     enhancedError.technicalDetails = technicalDetails
     enhancedError.originalError = error
     enhancedError.statusCode = error.response?.status

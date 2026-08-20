@@ -55,25 +55,30 @@ class SegmentationService:
         x["Strength_Compat"] = x["_str"].apply(
             lambda s: _strength_compat(target_str, s))
 
-        tc_mask    = x["_tc"]   == target_tc
-        form_mask  = x["_form"] == target_form
+        tc_exact = x["_tc"] == target_tc
+        tc_contains = x["_tc"].apply(lambda tc: (target_tc in tc or tc in target_tc) if (tc and target_tc) else False)
+        tc_mask = tc_exact | tc_contains
+
+        form_exact = x["_form"] == target_form
+        form_contains = x["_form"].apply(lambda f: (target_form in f or f in target_form) if (f and target_form) else False)
+        form_mask = form_exact | form_contains
+
         str_exact  = x["_str"].str.lower() == target_str.lower()
         str_close  = x["Strength_Compat"] >= 0.80
         str_mask   = str_exact | str_close
 
         for tier, mask, reason in [
-            (1, tc_mask & form_mask & str_mask,
-             "Same TC, dosage form, compatible strength"),
-            (2, tc_mask & form_mask,
-             "Same TC and dosage form"),
-            (3, tc_mask,
-             "Same TC only"),
+            (1, tc_mask & form_mask & str_mask, "Same TC, dosage form, compatible strength"),
+            (2, tc_mask & form_mask, "Same TC and dosage form"),
+            (3, tc_mask, "Same TC only"),
+            (4, form_mask, "Same dosage form (Cross-category match)"),
+            (5, x["_tc"].notna(), "All eligible master medicines (Fallback)"),
         ]:
             sub = x[mask].copy()
             if not sub.empty:
                 sub["Segment_Tier"] = tier
                 sub["Reason"]       = reason
-                x.drop(columns=["_tc","_form","_str"], inplace=True)
+                x.drop(columns=["_tc","_form","_str"], inplace=True, errors="ignore")
                 return sub, {
                     "candidate_count": len(sub), "Tier": tier,
                     "Tier 1": len(sub) if tier==1 else 0,
@@ -82,8 +87,8 @@ class SegmentationService:
                     "target_form": target_form,
                 }
 
-        x.drop(columns=["_tc","_form","_str"], inplace=True)
-        return x.iloc[0:0], self._empty_seg()
+        x.drop(columns=["_tc","_form","_str"], inplace=True, errors="ignore")
+        return x, self._empty_seg()
 
     @staticmethod
     def _empty_seg():
