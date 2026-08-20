@@ -1,0 +1,8 @@
+{
+  "dataset_events": 500000,
+  "unique_hcps": 12000,
+  "best_pipeline": "Direct_CatBoost",
+  "best_val_mae": 0.3985428809631112,
+  "potential_auc": 0.5425895621853005,
+  "status": "PRETRAINED_READY"
+}
