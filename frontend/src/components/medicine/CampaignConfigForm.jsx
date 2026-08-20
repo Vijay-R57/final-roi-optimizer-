@@ -60,7 +60,7 @@ export const CampaignConfigForm = ({ settings, onChange }) => {
               Expected Sample Lift (% incremental prescribing)
             </label>
             <span className="text-xs font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded">
-              {(settings.expected_sample_lift * 100).toFixed(1)}%
+              {((Number(settings.expected_sample_lift) || 0) * 100).toFixed(1)}%
             </span>
           </div>
           <input

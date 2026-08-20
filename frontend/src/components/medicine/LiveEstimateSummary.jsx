@@ -15,21 +15,25 @@ import { formatCurrency, formatNumber } from '../../utils/formatters'
 export const LiveEstimateSummary = ({ onRun, onReset, medicine, settings }) => {
   const { loading, loadingStage, isOptimized, campaignData } = useCampaign()
 
-  const sampleBudget = settings.total_samples * settings.sample_cost
+  const numTotalSamples = Number(settings.total_samples) || 0
+  const numSampleCost   = Number(settings.sample_cost) || 0
+  const numLift         = Number(settings.expected_sample_lift) || 0
+
+  const sampleBudget = numTotalSamples * numSampleCost
 
   // Post-optimization values from actual backend payload or live state
   const targetHcpsCount = isOptimized ? (campaignData.hcpUniverse?.eligible || 100) : null
   const expectedIncrRx = isOptimized
-    ? (campaignData.roi?.expected_incremental_prescriptions || 21.3).toFixed(1)
+    ? (Number(campaignData.roi?.expected_incremental_prescriptions) || 21.3).toFixed(1)
     : null
   const projectedRoi = isOptimized
-    ? (campaignData.roi?.projected_roi_percent || 444.5).toFixed(1)
+    ? (Number(campaignData.roi?.projected_roi_percent) || 444.5).toFixed(1)
     : null
   const expectedRev = isOptimized
-    ? (campaignData.roi?.expected_revenue || 5113.65)
+    ? (Number(campaignData.roi?.expected_revenue) || 5113.65)
     : null
   const breakEvenRx = isOptimized
-    ? (campaignData.roi?.breakeven_incremental_prescriptions || 3.9).toFixed(1)
+    ? (Number(campaignData.roi?.breakeven_incremental_prescriptions) || 3.9).toFixed(1)
     : null
 
   return (
@@ -61,13 +65,13 @@ export const LiveEstimateSummary = ({ onRun, onReset, medicine, settings }) => {
         <div className="flex items-center justify-between py-1.5 border-b border-white/5">
           <span className="text-slate-300">Total Samples</span>
           <span className="font-semibold text-slate-100">
-            {formatNumber(settings.total_samples)} units
+            {formatNumber(numTotalSamples)} units
           </span>
         </div>
         <div className="flex items-center justify-between py-1.5 border-b border-white/5">
           <span className="text-slate-300">Cost / Sample</span>
           <span className="font-mono text-slate-300">
-            ₹{settings.sample_cost.toFixed(4)}
+            ₹{numSampleCost.toFixed(4)}
           </span>
         </div>
       </div>
@@ -80,7 +84,7 @@ export const LiveEstimateSummary = ({ onRun, onReset, medicine, settings }) => {
         <div className="flex items-center justify-between py-1.5 border-b border-white/5">
           <span className="text-slate-300">Expected Prescription Lift</span>
           <span className="font-bold text-emerald-400">
-            +{(settings.expected_sample_lift * 100).toFixed(1)}%
+            +{(numLift * 100).toFixed(1)}%
           </span>
         </div>
         <div className="flex items-center justify-between py-1.5 border-b border-white/5">
