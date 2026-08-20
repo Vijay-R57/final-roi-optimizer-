@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  sample-drop-optimizer:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sample_drop_optimizer
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+    restart: unless-stopped
