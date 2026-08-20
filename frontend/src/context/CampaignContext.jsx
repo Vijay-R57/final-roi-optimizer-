@@ -164,43 +164,44 @@ export const CampaignProvider = ({ children }) => {
       const res = await sampleDropApi.runOptimization(payload)
       const data = res.data
 
-      // Fetch fresh rankings, full universe, and territory details
-      const [top100Res, allHcpsRes, zonesRes, roiRes] = await Promise.allSettled([
-        sampleDropApi.getTop100Hcps(),
-        sampleDropApi.getAllHcps(),
-        sampleDropApi.getZones(),
-        sampleDropApi.getRoi(),
-      ])
+      const rawTop100 = data.prescriber_distribution || data.top_100_hcps || []
+      const rawZones = data.zone_distribution || []
+      const rawRoi = data.roi || {}
+      const rawRoiScenarios = data.roi_scenarios || {}
+      const rawAnalog = data.selected_similar_medicine || data.analog || {}
 
       const mapHcpItem = (h, i) => ({
-        rank: h.rank || i + 1,
+        rank: i + 1,
         hcp_id: h.hcp_id,
-        hcp_name: h.hcp_name || `Dr. Prescriber #${h.hcp_id?.slice(-4) || i+1}`,
-        specialty: h.specialty || 'Specialist',
-        locality: h.locality || 'Metropolitan Area',
-        zone: h.zone || 'Main Zone',
-        probability_active: h.Probability_Active || 0.8,
-        positive_demand: h.Positive_Demand || 4.0,
-        expected_3m_demand: h.Expected_3M_Demand || 3.0,
-        potential_score: h.Potential_Score || 70,
+        hcp_name: h.hcp_name || `Dr. Prescriber #${String(h.hcp_id || i+1).slice(-4)}`,
+        specialty: h.specialty || h.Specialty || 'Specialist',
+        locality: h.locality || h.Locality || 'Metropolitan Area',
+        zone: h.zone || h.Zone || 'Main Zone',
+        probability_active: h.Probability_Active ?? 0.8,
+        positive_demand: h.Positive_Demand ?? 4.0,
+        expected_3m_demand: h.Expected_3M_Demand ?? 3.0,
+        potential_score: h.Potential_Score ?? 70,
         potential_category: h.Potential_Category || (h.Potential_Score > 60 ? 'High' : 'Medium'),
-        samples: h.Samples || h.samples || 0,
-        class_share: h.Class_Share || 0.35,
-        analog_active_months: h.Analog_Active_Months || 3,
-        expected_incremental_rx: (h.Expected_3M_Demand || 3.0) * Number(customSettings.expected_sample_lift),
-        expected_revenue: (h.Expected_3M_Demand || 3.0) * Number(customSettings.expected_sample_lift) * Number(customSettings.average_units_per_prescription) * Number(customMedicine.medicine_price),
-        expected_roi: 444.5,
+        samples: h.Samples ?? h.samples ?? 0,
+        class_share: h.Class_Share ?? 0.35,
+        analog_active_months: h.Analog_Active_Months ?? 3,
+        expected_incremental_rx: (h.Expected_3M_Demand ?? 3.0) * Number(customSettings.expected_sample_lift),
+        expected_revenue: (h.Expected_3M_Demand ?? 3.0) * Number(customSettings.expected_sample_lift) * Number(customSettings.average_units_per_prescription) * Number(customMedicine.medicine_price),
+        expected_roi: rawRoi.projected_roi_percent ?? 0,
         top_reasons: h.Top_Reasons || 'High therapeutic class share & active prescription velocity.',
-        notes: 'Optimized allocation from 2-stage hurdle model.',
+        notes: 'Optimized allocation from CatBoost exclusive model.',
       })
 
-      const updatedHcps = (top100Res.status === 'fulfilled' && top100Res.value?.data?.hcps?.length > 0)
-        ? top100Res.value.data.hcps.map(mapHcpItem)
-        : DEFAULT_CAMPAIGN_DATA.hcps
+      const updatedHcps = rawTop100.length > 0 ? rawTop100.map(mapHcpItem) : DEFAULT_CAMPAIGN_DATA.hcps
 
-      const updatedAllHcps = (allHcpsRes.status === 'fulfilled' && allHcpsRes.value?.data?.hcps?.length > 0)
-        ? allHcpsRes.value.data.hcps.map(mapHcpItem)
-        : []
+      const updatedZones = rawZones.map(z => ({
+        zone: z.Zone || z.zone,
+        hcps: z.HCP_Count || z.hcps || 0,
+        demand: z.Total_Expected_Demand || z.demand || 0,
+        avg_potential: z.Average_Potential_Score || z.avg_potential || 0,
+        samples: z.Allocated_Samples || z.samples || 0,
+        percentage: z.Allocation_Percentage || z.percentage || 0,
+      }))
 
       setTargetMedicine(customMedicine)
       setCampaignSettings(customSettings)
@@ -209,18 +210,45 @@ export const CampaignProvider = ({ children }) => {
         ...prev,
         target: customMedicine,
         settings: customSettings,
-        analog: data.analog || prev.analog,
-        dataset: data.dataset || prev.dataset,
+        analog: {
+          generic_name: rawAnalog.generic_name || 'Analog Match',
+          brand_name: rawAnalog.brand_name || '',
+          dosage_form: rawAnalog.dosage_form || customMedicine.dosage_form,
+          strength: rawAnalog.strength || customMedicine.strength,
+          tier: rawAnalog.match_tier_label || rawAnalog.tier || 'Tier 2 (Class Match)',
+          form_compat: rawAnalog.form_compat ?? true,
+          score: rawAnalog.similarity_score ?? 0.85,
+          historical_events: rawAnalog.historical_events ?? 5000,
+          active_hcps: rawAnalog.active_hcps ?? 1000,
+          historical_months: rawAnalog.historical_months ?? 33,
+        },
+        dataset: data.dataset_summary || data.dataset || prev.dataset,
         hcpUniverse: data.hcp_universe || prev.hcpUniverse,
-        model: data.model || prev.model,
+        model: {
+          best_pipeline: data.best_pipeline || data.model?.best_pipeline || 'Direct_CatBoost',
+          val_mae: data.best_val_mae || data.model?.val_mae || 0.3692,
+          val_wape: data.best_val_wape || data.model?.val_wape || 0.45,
+          potential_auc: data.potential_model_val_auc || 0.53,
+          blend_w_demand: data.blend_w_demand || 0.9,
+          blend_w_pot: data.blend_w_potential || 0.1,
+          val_ndcg100: data.blend_val_ndcg100 || 0.29,
+        },
         hcps: updatedHcps,
-        allHcps: updatedAllHcps.length > 0 ? updatedAllHcps : prev.allHcps || updatedHcps,
-        zones: (zonesRes.status === 'fulfilled' && zonesRes.value?.data?.zones?.length > 0)
-          ? zonesRes.value.data.zones
-          : prev.zones,
-        roi: (roiRes.status === 'fulfilled' && roiRes.value?.data?.scenarios)
-          ? { ...prev.roi, ...roiRes.value.data }
-          : prev.roi,
+        allHcps: updatedHcps,
+        zones: updatedZones.length > 0 ? updatedZones : prev.zones,
+        roi: {
+          sample_investment: rawRoi.sample_investment ?? (Number(customSettings.total_samples) * Number(customSettings.sample_cost)),
+          baseline_demand: rawRoi.predicted_baseline_demand ?? 0,
+          incremental_rx: rawRoi.expected_incremental_prescriptions ?? 0,
+          incremental_units: rawRoi.expected_incremental_units ?? 0,
+          revenue: rawRoi.expected_revenue ?? 0,
+          variable_cost: rawRoi.expected_variable_cost ?? 0,
+          profit: rawRoi.expected_incremental_profit ?? 0,
+          roi_pct: rawRoi.projected_roi_percent ?? 0,
+          breakeven_lift: rawRoi.breakeven_sample_lift ?? null,
+          breakeven_price: rawRoi.breakeven_medicine_price ?? 0,
+          scenarios: rawRoiScenarios,
+        },
       }))
 
       setIsDemoMode(false)

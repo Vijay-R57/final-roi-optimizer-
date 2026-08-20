@@ -1,21 +1,21 @@
 Feature,Importance,Group
-months_since_last_analog,23.52859018621413,Frequency/Recency
-analog_total_qty,15.252603286320825,Analog Behavior
-hcp_prior_qty_mean,10.611659174631201,Rolling Stats
-analog_recency,10.440891888656354,Analog Behavior
-analog_total_dcost,7.626883607301773,Analog Behavior
-month_sin,4.159754607935427,Seasonality
-month_cos,3.5230805021710387,Seasonality
-analog_r6m,3.3341668527907595,Analog Behavior
-analog_frequency,3.1231591957718154,Analog Behavior
-analog_total_claims,2.7232811698524815,Analog Behavior
-analog_share,1.84806464377895,Analog Behavior
-analog_avg_qty,1.8274201533290442,Analog Behavior
-analog_total_benes,1.6840995874329119,Analog Behavior
-qty_std_12m,1.5971404161780782,Rolling Stats
-analog_active_months,1.498830894502029,Analog Behavior
-pfreq_12m,1.1984671125725392,Frequency/Recency
-trend_slope_12m,0.7340189640641634,Trend
-qty_mean_12m,0.5948338719845636,Rolling Stats
-class_switching_score,0.4597682544277059,Therapeutic Class
-class_total_qty,0.2640478527718442,Therapeutic Class
+months_since_last_analog,23.868176432464853,Frequency/Recency
+analog_total_qty,11.352803837874122,Analog Behavior
+hcp_prior_qty_mean,10.797984969816067,Rolling Stats
+analog_total_dcost,10.547378694434746,Analog Behavior
+analog_recency,9.84235309827327,Analog Behavior
+month_sin,5.425587760951695,Seasonality
+analog_total_benes,4.737652206446011,Analog Behavior
+analog_r6m,3.089756516879356,Analog Behavior
+month_cos,2.4975330862755234,Seasonality
+analog_total_claims,2.345271587913172,Analog Behavior
+analog_frequency,2.212901911963216,Analog Behavior
+analog_share,2.0359001335565723,Analog Behavior
+analog_active_months,1.386631605560308,Analog Behavior
+pfreq_12m,1.292368469297907,Frequency/Recency
+qty_std_12m,1.1030756605690983,Rolling Stats
+class_growth_6m,1.0038068154045525,Trend
+analog_avg_qty,0.9855181852786651,Analog Behavior
+trend_slope_12m,0.6964902137839935,Trend
+qty_mean_12m,0.5411952420919564,Rolling Stats
+qty_std_6m,0.4207771646087957,Rolling Stats

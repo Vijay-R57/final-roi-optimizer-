@@ -281,23 +281,30 @@ def predict():
         },
         "total_samples":                  int(total_samples),
         "medicine_price":                 float(medicine_price),
-        "sample_cost":                    float(data.get("sample_cost", 0.0587)),
-        "expected_sample_lift":           float(data.get("sample_lift", 0.10)),
+        "sample_cost":                    float(data.get("sample_cost", 5.0)),
+        "expected_sample_lift":           float(data.get("sample_lift", 0.11)),
         "average_units_per_prescription": float(data.get("units_per_rx", 2)),
-        "variable_cost_per_unit":         float(data.get("variable_cost", 45)),
+        "variable_cost_per_unit":         float(data.get("variable_cost", 200.0)),
         "mode": "new_analog",
     }
 
     cache_key = (
-        req["medicine"]["generic_name"].lower(),
-        req["medicine"]["therapeutic_class"].lower(),
+        req["medicine"]["generic_name"].lower().strip(),
+        req["medicine"]["brand_name"].lower().strip(),
+        req["medicine"]["therapeutic_class"].lower().strip(),
+        req["medicine"]["dosage_form"].lower().strip(),
+        req["medicine"]["strength"].lower().strip(),
         req["total_samples"],
         req["medicine_price"],
-        req["expected_sample_lift"]
+        req["sample_cost"],
+        req["expected_sample_lift"],
+        req["average_units_per_prescription"],
+        req["variable_cost_per_unit"]
     )
 
     if cache_key in _run_cache:
         print(f"[Flask] Returning cached dynamic pipeline result for {cache_key}")
+        _last_result = _run_cache[cache_key]
         return jsonify(_run_cache[cache_key])
 
     try:
@@ -316,6 +323,9 @@ def predict():
 # ── Top 100 HCPs ───────────────────────────────────────────────────────────────
 @app.route("/api/hcps/top100")
 def top100():
+    if _last_result and "prescriber_distribution" in _last_result:
+        recs = _last_result["prescriber_distribution"]
+        return jsonify({"count": len(recs), "hcps": recs})
     recs = _load_csv_records("top_100_hcps.csv")
     return jsonify({"count": len(recs), "hcps": recs})
 
@@ -349,6 +359,8 @@ def hcps_all():
 # ── Allocation ─────────────────────────────────────────────────────────────────
 @app.route("/api/allocation")
 def allocation():
+    if _last_result and "prescriber_distribution" in _last_result:
+        return jsonify({"allocations": _last_result["prescriber_distribution"]})
     recs = _load_csv_records("sample_allocation.csv")
     return jsonify({"allocations": recs})
 
@@ -356,6 +368,8 @@ def allocation():
 # ── Zones ──────────────────────────────────────────────────────────────────────
 @app.route("/api/zones")
 def zones():
+    if _last_result and "zone_distribution" in _last_result:
+        return jsonify({"zones": _last_result["zone_distribution"]})
     recs = _load_csv_records("zone_distribution.csv")
     return jsonify({"zones": recs})
 
@@ -363,26 +377,26 @@ def zones():
 # ── ROI ────────────────────────────────────────────────────────────────────────
 @app.route("/api/roi", methods=["GET", "POST"])
 def roi():
-    recs = _load_csv_records("roi_scenarios.csv")
-    validation = _load_json("validation_report.json")
-    if _last_result:
+    if _last_result and "roi" in _last_result:
         r = _last_result["roi"]
+        scenarios = _last_result.get("roi_scenarios", {})
         return jsonify({
-            "sample_investment":   r["sample_investment"],
-            "baseline_demand":     r["predicted_baseline_demand"],
-            "incremental_rx":      r["expected_incremental_prescriptions"],
-            "incremental_units":   r["expected_incremental_units"],
-            "revenue":             r["expected_revenue"],
-            "variable_cost":       r["expected_variable_cost"],
-            "profit":              r["expected_incremental_profit"],
-            "roi_pct":             r["projected_roi_percent"],
-            "breakeven_lift":      r["breakeven_sample_lift"],
-            "breakeven_price":     r["breakeven_medicine_price"],
-            "breakeven_sample_cost": r["breakeven_sample_cost"],
-            "breakeven_rx":        r["breakeven_incremental_prescriptions"],
-            "disclaimer":          r["disclaimer"],
-            "scenarios":           recs,
+            "sample_investment":   r.get("sample_investment", 0),
+            "baseline_demand":     r.get("predicted_baseline_demand", 0),
+            "incremental_rx":      r.get("expected_incremental_prescriptions", 0),
+            "incremental_units":   r.get("expected_incremental_units", 0),
+            "revenue":             r.get("expected_revenue", 0),
+            "variable_cost":       r.get("expected_variable_cost", 0),
+            "profit":              r.get("expected_incremental_profit", 0),
+            "roi_pct":             r.get("projected_roi_percent", 0),
+            "breakeven_lift":      r.get("breakeven_sample_lift", None),
+            "breakeven_price":     r.get("breakeven_medicine_price", 0),
+            "breakeven_sample_cost": r.get("breakeven_sample_cost", 0),
+            "breakeven_rx":        r.get("breakeven_incremental_prescriptions", None),
+            "disclaimer":          r.get("disclaimer", ""),
+            "scenarios":           scenarios,
         })
+    recs = _load_csv_records("roi_scenarios.csv")
     return jsonify({"scenarios": recs})
 
 

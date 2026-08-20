@@ -17,6 +17,10 @@ def main():
     p.add_argument("--strength",            required=True, help="Dosage strength (e.g. 500 mg)")
     p.add_argument("--total-samples",       type=int,   required=True, help="Total sample unit volume budget")
     p.add_argument("--medicine-price",      type=float, required=True, help="Unit pack price in INR")
+    p.add_argument("--sample-cost",         type=float, default=5.0,   help="Production cost per sample in INR")
+    p.add_argument("--sample-lift",         type=float, default=0.11,  help="Expected sample lift ratio (e.g. 0.11 for 11%)")
+    p.add_argument("--units-per-rx",        type=int,   default=2,     help="Average units per prescription")
+    p.add_argument("--variable-cost",       type=float, default=200.0, help="Commercial variable cost per unit in INR")
     p.add_argument("--mode",                default="new_analog", choices=["new_analog","existing"])
     a = p.parse_args()
     req = {
@@ -29,10 +33,10 @@ def main():
         },
         "total_samples":                  a.total_samples,
         "medicine_price":                 a.medicine_price,
-        "sample_cost":                    0.0587,
-        "expected_sample_lift":           0.10,
-        "average_units_per_prescription": 2,
-        "variable_cost_per_unit":         45,
+        "sample_cost":                    a.sample_cost,
+        "expected_sample_lift":           a.sample_lift,
+        "average_units_per_prescription": a.units_per_rx,
+        "variable_cost_per_unit":         a.variable_cost,
         "mode":                           a.mode,
         "max_samples_per_hcp":            500,
     }
